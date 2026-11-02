@@ -1,0 +1,9 @@
+[submodule "external/gem5"]
+	path = external/gem5
+	url = https://github.com/gem5/gem5.git
+[submodule "external/mcpat"]
+	path = external/mcpat
+	url = https://github.com/HewlettPackard/mcpat.git
+[submodule "external/hotspot"]
+	path = external/hotspot
+	url = https://github.com/uvahotspot/HotSpot.git

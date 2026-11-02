@@ -1,0 +1,33 @@
+# Simulation outputs
+/results/
+/m5out/
+/checkpoints/
+
+# Downloaded workloads, disk images, datasets
+/resources/
+/benchmarks/bin/
+/benchmarks/build/
+
+# Project build outputs
+/build/
+/dist/
+*.o
+*.a
+*.so
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+*~
