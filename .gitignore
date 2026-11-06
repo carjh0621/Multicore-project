@@ -19,6 +19,7 @@
 __pycache__/
 *.py[cod]
 .venv/
+/.venv-analysis/
 .pytest_cache/
 
 # Local environment
@@ -31,3 +32,10 @@ __pycache__/
 .idea/
 .DS_Store
 *~
+
+note.md
+/docs/
+/tests/
+/.agents/
+/.aws/
+/.codex/

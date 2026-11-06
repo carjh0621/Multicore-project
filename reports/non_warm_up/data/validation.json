@@ -1,0 +1,24 @@
+{
+  "status": "validated",
+  "unique_cases": 20,
+  "sweep_points": 24,
+  "policy_sha256": "74504ab0c7ab16ef80473108cb3ff2fb2ffc5e0b69d2fd8043d414206ff1adec",
+  "tool_commits": {
+    "gem5": "e97d8fbfbe4ff549b2c90183956f719ada856756",
+    "mcpat": "74d4759f3ba2dff8f5a69e07a68efdb46b42fb8c",
+    "hotspot": "f18831e48cef5d62580585cca0d7fab6c71bc3cc"
+  },
+  "python": "3.10.12",
+  "numpy": "2.2.6",
+  "pandas": "2.3.3",
+  "matplotlib": "3.10.9",
+  "warmup": "no_excluded_warmup; cold-start effects included in full ROI",
+  "cases_with_mcpat_timing_warnings": 20,
+  "cases_with_cycle_bookkeeping_notes": 2,
+  "max_component_power_relative_rounding_difference": 1.2272006113944822e-06,
+  "analysis_script_sha256": "b14846ed106a8949b6e2b5ccbb6830a11010a7793277f55b8625ab12c4b0ec3a",
+  "source_files_hashed": 260,
+  "read_only_simulation_inputs": true,
+  "replicates_per_case": 1,
+  "plotly": "7.1.0"
+}

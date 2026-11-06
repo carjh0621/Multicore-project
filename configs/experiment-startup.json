@@ -1,0 +1,84 @@
+{
+  "revision": "v1",
+  "benchmarks": [
+    "blackscholes",
+    "canneal",
+    "freqmine",
+    "streamcluster"
+  ],
+  "input": "simsmall",
+  "core_counts": [
+    1,
+    4,
+    8
+  ],
+  "widths": [
+    2,
+    4,
+    8
+  ],
+  "fixed_width": 4,
+  "fixed_cores": 4,
+  "cache_line_bytes": 64,
+  "clock": "3GHz",
+  "roi_cpu": {
+    "numThreads": 1,
+    "numROBEntries": 192,
+    "numPhysIntRegs": 256,
+    "numPhysFloatRegs": 256,
+    "LQEntries": 32,
+    "SQEntries": 32
+  },
+  "iq_entries": 64,
+  "pipeline_width_parameters": [
+    "fetchWidth",
+    "decodeWidth",
+    "renameWidth",
+    "dispatchWidth",
+    "issueWidth",
+    "wbWidth",
+    "commitWidth"
+  ],
+  "cache": {
+    "l1i_size": "32KiB",
+    "l1i_assoc": 8,
+    "l1d_size": "32KiB",
+    "l1d_assoc": 8,
+    "l2_size": "1MiB",
+    "l2_assoc": 16,
+    "num_l2_banks": 2
+  },
+  "memory": {
+    "size": "3GiB",
+    "type": "DualChannelDDR4_2400"
+  },
+  "kernel": {
+    "id": "x86-linux-kernel-4.19.83",
+    "version": "1.0.0"
+  },
+  "disk": {
+    "id": "x86-parsec",
+    "version": "1.0.0"
+  },
+  "parsec_build": "gcc-hooks",
+  "power": {
+    "technology_nm": 45,
+    "voltage_v": 1.0,
+    "reference_temperature_k": 350,
+    "dvfs": false,
+    "power_gating": false,
+    "temperature_leakage_feedback": false
+  },
+  "thermal": {
+    "model": "block",
+    "ambient_k": 318.15,
+    "power_input": "roi_average",
+    "headline_metric": "maximum_steady_state_silicon_celsius"
+  },
+  "execution": {
+    "fast_forward_until": "workbegin",
+    "warmup": "no_excluded_warmup; cold-start effects included in full ROI",
+    "checkpoint_boundary": "workbegin_before_o3_switch",
+    "checkpoint_boot_cpu": "atomic"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "name": "pilot-v1-area-derived-block",
+  "floorplan": {
+    "method": "recursive_area_bisection",
+    "die_aspect_ratio": 1.0,
+    "area_scale": 1.0
+  },
+  "conservation": {
+    "relative_tolerance": 0.00005,
+    "absolute_tolerance": 0.000001
+  },
+  "hotspot": {
+    "model_type": "block",
+    "t_chip": 0.00015,
+    "k_chip": 100.0,
+    "p_chip": 1750000.0,
+    "t_interface": 0.00002,
+    "k_interface": 4.0,
+    "p_interface": 4000000.0,
+    "s_spreader": 0.05,
+    "t_spreader": 0.001,
+    "k_spreader": 400.0,
+    "p_spreader": 3550000.0,
+    "s_sink": 0.07,
+    "t_sink": 0.0069,
+    "k_sink": 400.0,
+    "p_sink": 3550000.0,
+    "r_convec": 0.1,
+    "c_convec": 140.4,
+    "block_omit_lateral": 0,
+    "model_secondary": 0,
+    "dtm_used": 0,
+    "leakage_used": 0,
+    "package_model_used": 0
+  },
+  "sources": [
+    "Thermal material/thickness and convection defaults follow external/hotspot/temperature.c:default_thermal_config, not template.config (which has different convection/material settings).",
+    "Spreader and sink sides are explicit pilot choices of 50 mm and 70 mm, enlarged from upstream defaults to accommodate area-derived multicore dies. These and all cooling parameters remain fixed across configurations.",
+    "Ambient temperature comes from experiment-startup.json. Silicon power is ROI-average Runtime Dynamic + Subthreshold Leakage + Gate Leakage, at the original McPAT reference temperature."
+  ],
+  "limitations": [
+    "Pilot temperatures inherit all gem5-to-McPAT power/area approximations and McPAT timing warnings.",
+    "The floorplan is a deterministic area-derived surrogate, not a placed-and-routed CPU. Each core is split into core logic, L1I and L1D; shared L2 banks are separate blocks. Coarse blocks assume uniform power within each rectangle.",
+    "NoC routers/wires are lumped into one contiguous silicon-equivalent block and all memory controllers into one aggregate block. Physical routing, metal overlap and controller locations are not recovered from McPAT.",
+    "The die uses the sum of disjoint McPAT areas at unit area scale, with no added whitespace; aspect ratio is fixed. Placement/adjacency and die area can change with core count or width under the same layout rule.",
+    "Headline temperature is the maximum of modeled silicon block temperatures, excluding interface, spreader, sink and package nodes. Unresolved within-block hotspots are not measured.",
+    "Steady state assumes ROI-average power is applied indefinitely. It is not the temperature reached at the end of the short PARSEC ROI, and this flow does not reconstruct transient temperatures.",
+    "Cooling settings are assumptions, not a calibrated hardware package. Leakage remains fixed at McPAT's reference temperature with no thermal feedback, power gating or thermal throttling."
+  ]
+}
