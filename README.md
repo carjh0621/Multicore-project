@@ -2,7 +2,7 @@
 
 This project connects **gem5, McPAT and HotSpot** to evaluate the performance, power and temperature of multicore out-of-order CPUs. It studies how adding cores and widening pipelines affect execution time, chip power, energy and modeled steady-state temperature.
 
-The workloads are PARSEC 3.0 `simsmall`: **blackscholes, canneal, freqmine and streamcluster**, measured over their regions of interest (ROIs). All **20 non-warm-up cases** have completed the flow. Read the [full analysis](non_warm_up_analysis.md) for the findings and limitations, or browse the [reports guide](reports/README.md) for data and plots. Reading the published report requires no simulator build.
+The workloads are PARSEC 3.0 `simsmall`: **blackscholes, canneal, freqmine and streamcluster**, measured over their regions of interest (ROIs). All **20 non-warm-up cases** have completed the flow. Read the [full analysis](reports/non_warm_up/non_warm_up_AI_analysis.md) for the findings and limitations, or browse the [reports guide](reports/README.md) for data and plots. Reading the published report requires no simulator build.
 
 ## Experiment
 
@@ -38,14 +38,13 @@ PARSEC workload + experiment policy
          normalized metrics + CSVs + plots + analysis report
 ```
 
-Average chip power is **Runtime Dynamic + Subthreshold Leakage + Gate Leakage**, including modeled cores, caches, interconnect and memory controllers. External DRAM and board power are excluded. HotSpot estimates equilibrium under sustained ROI-average power, not the temperature reached during the short ROI. Power/floorplan models are approximate, leakage is fixed at 350 K, and all completed McPAT cases report L2 timing-constraint warnings. See the [analysis](non_warm_up_analysis.md) before interpreting absolute physical estimates.
+Average chip power is **Runtime Dynamic + Subthreshold Leakage + Gate Leakage**, including modeled cores, caches, interconnect and memory controllers. External DRAM and board power are excluded. HotSpot estimates equilibrium under sustained ROI-average power, not the temperature reached during the short ROI. Power/floorplan models are approximate, leakage is fixed at 350 K, and all completed McPAT cases report L2 timing-constraint warnings. See the [analysis](reports/non_warm_up/non_warm_up_AI_analysis.md) before interpreting absolute physical estimates.
 
 ## Directory structure
 
 ```text
 Multicore-project/
 ├── README.md
-├── non_warm_up_analysis.md          # Full interpretation of the completed study
 ├── requirements-analysis.txt       # Python analysis/plotting dependencies
 ├── .gitignore
 ├── .gitmodules                     # Pinned upstream submodule locations
@@ -71,6 +70,7 @@ Multicore-project/
 └── reports/
     ├── README.md                   # Data sources, extraction and figure guide
     └── non_warm_up/
+        ├── non_warm_up_AI_analysis.md # Full interpretation of the study
         ├── data/                   # Extracted metrics and provenance
         ├── figures/                # 23 figures, each in PNG/SVG/PDF
         └── interactive_tradeoffs.html
@@ -182,7 +182,7 @@ python3 -m venv .venv-analysis
 .venv-analysis/bin/python scripts/analyze_non_warm_up.py
 ```
 
-This validates saved artifacts and regenerates the root analysis report, CSVs, 23 static figure sets and offline interactive chart. It does not run simulators. Full provenance-checked regeneration requires raw results and McPAT/HotSpot executables matching the recorded binary hashes; published CSVs alone are insufficient. See [reports/README.md](reports/README.md) for extraction and sharing details.
+This validates saved artifacts and regenerates the analysis report, CSVs, 23 static figure sets and offline interactive chart. It does not run simulators. Full provenance-checked regeneration requires raw results and McPAT/HotSpot executables matching the recorded binary hashes; published CSVs alone are insufficient. See [reports/README.md](reports/README.md) for extraction and sharing details.
 
 ## Third-party software and licenses
 

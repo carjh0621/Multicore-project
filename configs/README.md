@@ -91,7 +91,7 @@ The square die uses summed modeled areas, with no whitespace. Recursive area bis
 
 The floorplan, power input, configuration and mapping are generated without running the solver; `temperature.json` requires successful solver-output validation. Celsius is Kelvin minus 273.15, with original text precision 0.01 K. Interface/spreader/sink/internal package nodes are excluded from the headline maximum.
 
-Steady state assumes average power applied indefinitely; it is not end-of-ROI temperature. Fixed leakage is not recalculated from HotSpot temperatures, and there is no thermal throttling. Geometry/cooling are surrogate assumptions, not a real CPU layout or calibrated package. Both model JSON files record these limitations; see the [full analysis](../non_warm_up_analysis.md) for their implications and the [scripts guide](../scripts/README.md#one-case-through-the-flow) for conversion commands.
+Steady state assumes average power applied indefinitely; it is not end-of-ROI temperature. Fixed leakage is not recalculated from HotSpot temperatures, and there is no thermal throttling. Geometry/cooling are surrogate assumptions, not a real CPU layout or calibrated package. Both model JSON files record these limitations; see the [full analysis](../reports/non_warm_up/non_warm_up_AI_analysis.md) for their implications and the [scripts guide](../scripts/README.md#one-case-through-the-flow) for conversion commands.
 
 ## Changes and compatibility
 

@@ -6,7 +6,7 @@ This report analyzes **20 completed PARSEC 3.0 `simsmall` ROI measurements** thr
 
 The absolute watt, area and temperature estimates require particular care: all 20 McPAT runs report L2 latency-constraint warnings, and the surrogate NoC/cache models contribute substantial area and leakage. The performance trends come from gem5; the physical cost trends are conditional on these modeling choices.
 
-Open the [interactive tradeoff plot](reports/non_warm_up/interactive_tradeoffs.html) in a browser for hoverable metrics and workload selection. All **23 figures** are available as PNG, SVG and PDF. The [complete measurements](reports/non_warm_up/data/summary.csv), [normalized sweeps](reports/non_warm_up/data/sweeps.csv), [component powers](reports/non_warm_up/data/power_components.csv) and [validation record](reports/non_warm_up/data/validation.json) are included for independent checking.
+Open the [interactive tradeoff plot](interactive_tradeoffs.html) in a browser for hoverable metrics and workload selection. All **23 figures** are available as PNG, SVG and PDF. The [complete measurements](data/summary.csv), [normalized sweeps](data/sweeps.csv), [component powers](data/power_components.csv) and [validation record](data/validation.json) are included for independent checking.
 
 ## 1. What was measured
 
@@ -19,7 +19,7 @@ Open the [interactive tradeoff plot](reports/non_warm_up/interactive_tradeoffs.h
 
 `C` denotes physical O3 cores, with one hardware thread per core; PARSEC worker count follows core count. `W` changes **fetch, decode, rename, dispatch, issue, writeback and commit widths together**. It is not an isolated issue-width experiment. Four workloads × five unique configurations = 20 measurements. C4/W4 belongs to both sweeps, so the normalized dataset has 24 rows but still only 20 unique measured runs. This is not a complete 3×3 core/width grid; interactions such as C8/W8 were not measured.
 
-The [frozen experiment policy](configs/experiment-startup.json) specifies the same requested 3 GHz clock, 1 V, 45 nm analytical technology, ROB 192, shared IQ 64, 256 integer and 256 floating-point physical registers, and 32-entry load/store queues. Functional-unit counts stay fixed as width changes. McPAT represents the shared IQ as 32 integer + 32 FP entries and uses scalar-equivalent SIMD/FPU proxies.
+The [frozen experiment policy](../../configs/experiment-startup.json) specifies the same requested 3 GHz clock, 1 V, 45 nm analytical technology, ROB 192, shared IQ 64, 256 integer and 256 floating-point physical registers, and 32-entry load/store queues. Functional-unit counts stay fixed as width changes. McPAT represents the shared IQ as 32 integer + 32 FP entries and uses scalar-equivalent SIMD/FPU proxies.
 
 Each core has private 32 KiB L1I and 32 KiB L1D caches, both 8-way. Two shared L2 banks provide a fixed total of 2 MiB, 16-way, with 64-byte cache lines. Memory is dual-channel DDR4-2400 with 3 GiB capacity. Thus, the core sweep also increases aggregate private L1 capacity and the number of coherence endpoints. It does not hold chip area, private-cache capacity or network hardware constant.
 
@@ -27,7 +27,7 @@ gem5 represents the requested clock by an integer period of **333 ticks at 10¹�
 
 ### ROI and non-warm-up meaning
 
-The [runner](configs/gem5/run_parsec.py) and [ROI controller](scripts/roi_control.py) fast-forward the guest OS and PARSEC initialization using Atomic cores. With Ruby, this fast path bypasses caching. At the benchmark's `WORKBEGIN` hook, a checkpoint is saved before switching to O3. A measured restore switches to O3, resets statistics, and runs through `WORKEND`. The report uses that completed detailed interval, excluding boot, preparation and checkpoint creation.
+The [runner](../../configs/gem5/run_parsec.py) and [ROI controller](../../scripts/roi_control.py) fast-forward the guest OS and PARSEC initialization using Atomic cores. With Ruby, this fast path bypasses caching. At the benchmark's `WORKBEGIN` hook, a checkpoint is saved before switching to O3. A measured restore switches to O3, resets statistics, and runs through `WORKEND`. The report uses that completed detailed interval, excluding boot, preparation and checkpoint creation.
 
 There is **no excluded detailed warm-up interval**. O3/cache startup effects are included in the full measured ROI, after which structures warm naturally during execution. This is a full-ROI cold-start methodology, not a claim that caches stay cold for the entire ROI. Different configurations can have different startup sensitivity. The endpoint establishes completion of the hooked ROI; it does not independently verify any benchmark output checking that occurs after `WORKEND`.
 
@@ -66,7 +66,7 @@ The solid lines connect three sampled settings; intermediate settings are not me
 
 Here `P₈/P₀` and `E₈/E₀` compare C8/W4 with C1/W4; efficiency is `S₈/8`.
 
-![Figure 1. Core-count speedup and core scaling efficiency; the dashed line is proportional scaling.](reports/non_warm_up/figures/01_tlp_speedup.png)
+![Figure 1. Core-count speedup and core scaling efficiency; the dashed line is proportional scaling.](figures/01_tlp_speedup.png)
 
 *Figure 1. Core-count speedup and core scaling efficiency; the dashed line is proportional scaling.*
 
@@ -82,7 +82,7 @@ Here `P₈/P₀` and `E₈/E₀` compare C8/W4 with C1/W4; efficiency is `S₈/8
 
 ### Power, energy and thermal cost
 
-![Figure 3. Absolute chip power and equilibrium silicon temperature in the core sweep.](reports/non_warm_up/figures/03_tlp_power_temperature.png)
+![Figure 3. Absolute chip power and equilibrium silicon temperature in the core sweep.](figures/03_tlp_power_temperature.png)
 
 *Figure 3. Absolute chip power and equilibrium silicon temperature in the core sweep.*
 
@@ -103,7 +103,7 @@ Peak modeled equilibrium temperature rises by **34.76, 25.48, 24.81 and 29.35 °
 
 The width sweep uses **C4/W2 as its baseline**. Its eight-wide nominal scale factor is 4, so efficiency here is `S₈/4`, not `S₈/8`.
 
-![Figure 2. Width-sweep speedup and speedup divided by the nominal width ratio.](reports/non_warm_up/figures/02_ilp_speedup.png)
+![Figure 2. Width-sweep speedup and speedup divided by the nominal width ratio.](figures/02_ilp_speedup.png)
 
 *Figure 2. Width-sweep speedup and speedup divided by the nominal width ratio.*
 
@@ -115,7 +115,7 @@ The width sweep uses **C4/W2 as its baseline**. Its eight-wide nominal scale fac
 
 **Streamcluster** peaks at W4: **1.324×** speedup versus W2. W8 reaches only **1.173×**, taking **12.8% longer than W4**. Its committed micro-op count rises by 13.4% from W4 to W8 while per-core throughput changes by only about 0.5%. The extra retired activity, rather than a substantial throughput improvement, accompanies the runtime regression.
 
-![Figure 4. Power and equilibrium temperature as all seven pipeline widths increase.](reports/non_warm_up/figures/04_ilp_power_temperature.png)
+![Figure 4. Power and equilibrium temperature as all seven pipeline widths increase.](figures/04_ilp_power_temperature.png)
 
 *Figure 4. Power and equilibrium temperature as all seven pipeline widths increase.*
 
@@ -140,11 +140,11 @@ At the common C4/W4 configuration:
 | freqmine | 39.90 | 40.53 | 7.45 | 21.45 | 0.88 | 69.14 |
 | streamcluster | 57.38 | 71.00 | 7.75 | 23.30 | 0.76 | 47.57 |
 
-![Figure 7. Disjoint core, cache, network and controller power across the core sweep; axes differ by workload.](reports/non_warm_up/figures/07_tlp_component_power.png)
+![Figure 7. Disjoint core, cache, network and controller power across the core sweep; axes differ by workload.](figures/07_tlp_component_power.png)
 
 *Figure 7. Disjoint core, cache, network and controller power across the core sweep; axes differ by workload.*
 
-![Figure 8. The same component accounting across the width sweep.](reports/non_warm_up/figures/08_ilp_component_power.png)
+![Figure 8. The same component accounting across the width sweep.](figures/08_ilp_component_power.png)
 
 *Figure 8. The same component accounting across the width sweep.*
 
@@ -154,11 +154,11 @@ These percentages are properties of the chosen mapping. In particular, McPAT est
 
 ### Dynamic versus static
 
-![Figure 9. Runtime dynamic, subthreshold leakage and gate leakage; both sweep panels reuse C4/W4 measurements.](reports/non_warm_up/figures/09_dynamic_static_power.png)
+![Figure 9. Runtime dynamic, subthreshold leakage and gate leakage; both sweep panels reuse C4/W4 measurements.](figures/09_dynamic_static_power.png)
 
 *Figure 9. Runtime dynamic, subthreshold leakage and gate leakage; both sweep panels reuse C4/W4 measurements.*
 
-![Figure 10. Per-component dynamic and static power at C4/W4.](reports/non_warm_up/figures/10_component_dynamic_static.png)
+![Figure 10. Per-component dynamic and static power at C4/W4.](figures/10_component_dynamic_static.png)
 
 *Figure 10. Per-component dynamic and static power at C4/W4.*
 
@@ -178,7 +178,7 @@ At C8/W4, chip static power is **188.81 W**, accounting for **56.3–85.2%** of 
 | C4/W8 | 550.561 | 76.934 | 20.771 | 10 | 90 |
 | C8/W4 | 1061.510 | 188.812 | 85.702 | 14 | 182 |
 
-![Figure 18. Area and fixed-reference leakage by disjoint component; all workloads share each configuration’s hardware.](reports/non_warm_up/figures/18_area_and_static_cost.png)
+![Figure 18. Area and fixed-reference leakage by disjoint component; all workloads share each configuration’s hardware.](figures/18_area_and_static_cost.png)
 
 *Figure 18. Area and fixed-reference leakage by disjoint component; all workloads share each configuration’s hardware.*
 
@@ -190,11 +190,11 @@ In contrast, W2→W8 keeps most hardware capacities and functional-unit counts f
 
 “Linear” can mean either **proportional** (`P = kx`, through the origin) or **affine** (`P = a + bx`, with fixed overhead). These questions need different tests. A total-power ratio below the hardware-count ratio rejects proportional scaling over that interval, but does not by itself reject an affine relationship.
 
-![Figure 5. Core-sweep power normalized to C1/W4, with proportional reference and static fractions.](reports/non_warm_up/figures/05_tlp_normalized_power.png)
+![Figure 5. Core-sweep power normalized to C1/W4, with proportional reference and static fractions.](figures/05_tlp_normalized_power.png)
 
 *Figure 5. Core-sweep power normalized to C1/W4, with proportional reference and static fractions.*
 
-![Figure 6. Width-sweep power normalized to C4/W2, with proportional reference and static fractions.](reports/non_warm_up/figures/06_ilp_normalized_power.png)
+![Figure 6. Width-sweep power normalized to C4/W2, with proportional reference and static fractions.](figures/06_ilp_normalized_power.png)
 
 *Figure 6. Width-sweep power normalized to C4/W2, with proportional reference and static fractions.*
 
@@ -213,7 +213,7 @@ Blackscholes, canneal and freqmine have higher incremental watts/core in the C4�
 
 Every width interval has power elasticity below 1: widening is subproportional in total average power in this fixed-resource model. Canneal is nearly affine with a large fixed-power offset and a small added-width cost. The other workloads have smaller watts/width-unit in W4→W8 than W2→W4, although this does not imply a universal hardware power law.
 
-![Figure 17. Interval power elasticity log(P₂/P₁)/log(x₂/x₁); the dashed level 1 denotes proportional growth.](reports/non_warm_up/figures/17_power_elasticity.png)
+![Figure 17. Interval power elasticity log(P₂/P₁)/log(x₂/x₁); the dashed level 1 denotes proportional growth.](figures/17_power_elasticity.png)
 
 *Figure 17. Interval power elasticity log(P₂/P₁)/log(x₂/x₁); the dashed level 1 denotes proportional growth.*
 
@@ -223,11 +223,11 @@ Only three levels are sampled per sweep, with one observation each. No robust po
 
 The following are diagnostic associations. None is a source-level attribution to a particular lock, spin loop or data structure.
 
-![Figure 15. Core-sweep executed work, per-core retirement throughput, L2 misses and equivalent network hop flits; bottom axes are logarithmic.](reports/non_warm_up/figures/15_tlp_work_diagnostics.png)
+![Figure 15. Core-sweep executed work, per-core retirement throughput, L2 misses and equivalent network hop flits; bottom axes are logarithmic.](figures/15_tlp_work_diagnostics.png)
 
 *Figure 15. Core-sweep executed work, per-core retirement throughput, L2 misses and equivalent network hop flits; bottom axes are logarithmic.*
 
-![Figure 16. Width-sweep diagnostics; per-core throughput counts all retired work, including synchronization.](reports/non_warm_up/figures/16_ilp_work_diagnostics.png)
+![Figure 16. Width-sweep diagnostics; per-core throughput counts all retired work, including synchronization.](figures/16_ilp_work_diagnostics.png)
 
 *Figure 16. Width-sweep diagnostics; per-core throughput counts all retired work, including synchronization.*
 
@@ -257,11 +257,11 @@ For W4→W8, committed μops increase **13.4%**, while throughput changes from *
 
 Core scaling does increase some memory-system activity: C4→C8 raises memory-controller requests from **25,760 to 213,362** and L2 demand misses from **1.593 M to 3.894 M**. Nevertheless, Ruby L2 demand misses are not equivalent to DRAM requests, and hop-flit counts are not stall cycles. These data alone do not establish bandwidth saturation, false sharing or lock contention. PC/source profiles, synchronization measurements, queue occupancy/latency and bandwidth counters would be appropriate follow-up evidence.
 
-![Figure 22. Eight-core retired-work shares and core-block temperatures; equal instruction shares do not guarantee equal useful progress.](reports/non_warm_up/figures/22_per_core_work_and_temperature.png)
+![Figure 22. Eight-core retired-work shares and core-block temperatures; equal instruction shares do not guarantee equal useful progress.](figures/22_per_core_work_and_temperature.png)
 
 *Figure 22. Eight-core retired-work shares and core-block temperatures; equal instruction shares do not guarantee equal useful progress.*
 
-![Figure 23. Issued operation mix and normalized IQ-full rename events; events are not additive stall-cycle fractions.](reports/non_warm_up/figures/23_mix_and_iq_pressure.png)
+![Figure 23. Issued operation mix and normalized IQ-full rename events; events are not additive stall-cycle fractions.](figures/23_mix_and_iq_pressure.png)
 
 *Figure 23. Issued operation mix and normalized IQ-full rename events; events are not additive stall-cycle fractions.*
 
@@ -284,11 +284,11 @@ Average watts answer a cooling/supply question; joules answer the cost of finish
 
 Each “best” is **within the indicated sweep**, with no imposed temperature, area or power budget. EDP is one chosen objective, not a universally correct weighting. The canneal width-sweep energy difference between W4 and W8 is particularly small and has no replication-based uncertainty estimate.
 
-![Figure 11. Core-sweep normalized ROI energy and energy-delay product; lower is better.](reports/non_warm_up/figures/11_tlp_energy_edp.png)
+![Figure 11. Core-sweep normalized ROI energy and energy-delay product; lower is better.](figures/11_tlp_energy_edp.png)
 
 *Figure 11. Core-sweep normalized ROI energy and energy-delay product; lower is better.*
 
-![Figure 12. Width-sweep normalized ROI energy and energy-delay product.](reports/non_warm_up/figures/12_ilp_energy_edp.png)
+![Figure 12. Width-sweep normalized ROI energy and energy-delay product.](figures/12_ilp_energy_edp.png)
 
 *Figure 12. Width-sweep normalized ROI energy and energy-delay product.*
 
@@ -296,11 +296,11 @@ At C4/W4 versus C1/W4, blackscholes and canneal save **6.3% and 12.2%** energy, 
 
 In the width sweep, W8 saves considerable energy for blackscholes and some for freqmine; canneal has its minimum at W4; streamcluster W8 uses more energy than both W2 and W4. Compared with C4/W4, streamcluster C8/W4 is worse in runtime, average power, energy and peak equilibrium temperature, as is C4/W8. C4/W4 therefore dominates those two sampled alternatives on these objectives.
 
-![Figure 13. Core-sweep speedup–power tradeoffs. Points below the diagonal save ROI energy; color encodes temperature and marker area grows with die area.](reports/non_warm_up/figures/13_tlp_tradeoff.png)
+![Figure 13. Core-sweep speedup–power tradeoffs. Points below the diagonal save ROI energy; color encodes temperature and marker area grows with die area.](figures/13_tlp_tradeoff.png)
 
 *Figure 13. Core-sweep speedup–power tradeoffs. Points below the diagonal save ROI energy; color encodes temperature and marker area grows with die area.*
 
-![Figure 14. Width-sweep tradeoffs using the independent C4/W2 baseline.](reports/non_warm_up/figures/14_ilp_tradeoff.png)
+![Figure 14. Width-sweep tradeoffs using the independent C4/W2 baseline.](figures/14_ilp_tradeoff.png)
 
 *Figure 14. Width-sweep tradeoffs using the independent C4/W2 baseline.*
 
@@ -319,21 +319,21 @@ These are **geometric means of per-workload normalized ratios**, with equal weig
 
 ## 9. Temperature: interpretation and spatial patterns
 
-The [thermal model](configs/hotspot/model-v1.json) applies each block's **ROI-average total power indefinitely** and solves for steady state. Ambient is **45 °C**, silicon thickness 0.15 mm, thermal interface thickness 20 μm, spreader side 50 mm, heat-sink side 70 mm, and convection resistance 0.1 K/W. These settings remain fixed across cases.
+The [thermal model](../../configs/hotspot/model-v1.json) applies each block's **ROI-average total power indefinitely** and solves for steady state. Ambient is **45 °C**, silicon thickness 0.15 mm, thermal interface thickness 20 μm, spreader side 50 mm, heat-sink side 70 mm, and convection resistance 0.1 K/W. These settings remain fixed across cases.
 
 The square die uses the sum of disjoint McPAT block areas, with no added whitespace. A deterministic recursive bisection places core logic, L1I, L1D, two L2 banks, one whole-network block and one aggregate memory-controller block. Area and placement change across configurations, so the temperature comparison includes both different power and different surrogate geometry.
 
-![Figure 19. All 20 cases: equilibrium peak temperature versus total power and chip-average power density.](reports/non_warm_up/figures/19_temperature_power_density.png)
+![Figure 19. All 20 cases: equilibrium peak temperature versus total power and chip-average power density.](figures/19_temperature_power_density.png)
 
 *Figure 19. All 20 cases: equilibrium peak temperature versus total power and chip-average power density.*
 
 Temperature rises monotonically with both cores and width in every workload, but is not proportional to either hardware parameter. Higher total power raises the heat-removal burden; block density, adjacency, die area and package spreading also matter. Chip-average W/mm² alone does not determine the hottest block. For example, blackscholes C1/W4 has about **0.241 W/mm² and 56.43 °C**, while C4/W2 has a lower chip-average **0.216 W/mm²** but a higher peak **63.81 °C**, under the same package assumptions.
 
-![Figure 20. Example core-sweep thermal maps for blackscholes and streamcluster, with common millimeter and temperature scales. Gray is outside the modeled die.](reports/non_warm_up/figures/20_tlp_thermal_floorplans.png)
+![Figure 20. Example core-sweep thermal maps for blackscholes and streamcluster, with common millimeter and temperature scales. Gray is outside the modeled die.](figures/20_tlp_thermal_floorplans.png)
 
 *Figure 20. Example core-sweep thermal maps for blackscholes and streamcluster, with common millimeter and temperature scales. Gray is outside the modeled die.*
 
-![Figure 21. Example width-sweep thermal maps under the same surrogate placement rule and cooling.](reports/non_warm_up/figures/21_ilp_thermal_floorplans.png)
+![Figure 21. Example width-sweep thermal maps under the same surrogate placement rule and cooling.](figures/21_ilp_thermal_floorplans.png)
 
 *Figure 21. Example width-sweep thermal maps under the same surrogate placement rule and cooling.*
 
@@ -343,14 +343,14 @@ The full ROI durations range from approximately **4.2 to 659.2 ms**. These stead
 
 ## 10. Reliability, model limitations and what remains unresolved
 
-The [validation record](reports/non_warm_up/data/validation.json) records 20 completed cases, 24 normalized sweep points and **260 SHA-256-hashed source artifacts**. The analysis rechecks stage provenance and the gem5→McPAT mapping, uses the completed ROI's statistics dump rather than arbitrary intermediate signal-triggered dumps, verifies cache hit/miss accounting and conserves detailed chip power. Two cases, canneal C1/W4 and freqmine C1/W4, have documented gem5 cycle-counter bookkeeping notes; exact tick duration is still used, with active cycles checked against elapsed time.
+The [validation record](data/validation.json) records 20 completed cases, 24 normalized sweep points and **260 SHA-256-hashed source artifacts**. The analysis rechecks stage provenance and the gem5→McPAT mapping, uses the completed ROI's statistics dump rather than arbitrary intermediate signal-triggered dumps, verifies cache hit/miss accounting and conserves detailed chip power. Two cases, canneal C1/W4 and freqmine C1/W4, have documented gem5 cycle-counter bookkeeping notes; exact tick duration is still used, with active cycles checked against elapsed time.
 
 The following materially limit the conclusions:
 
 1. **Single observation per configuration.** Guest scheduling, synchronization and initialization can influence results. Small differences, particularly canneal's width-energy ranking, need repetitions before being treated as stable design preferences.
 2. **Cold-start full-ROI methodology.** O3 structures and caches are not preconditioned by detailed pre-ROI execution. The direction and magnitude of this bias can vary by workload and hardware size. Current data do not establish that warm-up would preserve every ranking.
-3. **Physical timing is not validated.** Every McPAT run reports two `L2cache array structure cannot satisfy latency constraint` warnings, one per L2 bank. See [the complete warning list](reports/non_warm_up/data/mcpat_warnings.csv). gem5 timing is still the configured simulation timing; the analytical cache does not establish that those constraints are physically realizable at the modeled clock.
-4. **Approximate power/activity mapping.** SIMD uses scalar-equivalent FPU activity; several register/storage structures lack separate representation; rename/CDB activity uses proxies. Cache demand read/write splitting is estimated, and explicit fill/writeback/coherence/directory activity is incomplete. Low modeled L2 dynamic power must be interpreted in that context. Details are recorded in the [McPAT policy](configs/mcpat/model-v1.json).
+3. **Physical timing is not validated.** Every McPAT run reports two `L2cache array structure cannot satisfy latency constraint` warnings, one per L2 bank. See [the complete warning list](data/mcpat_warnings.csv). gem5 timing is still the configured simulation timing; the analytical cache does not establish that those constraints are physically realizable at the modeled clock.
+4. **Approximate power/activity mapping.** SIMD uses scalar-equivalent FPU activity; several register/storage structures lack separate representation; rename/CDB activity uses proxies. Cache demand read/write splitting is estimated, and explicit fill/writeback/coherence/directory activity is incomplete. Low modeled L2 dynamic power must be interpreted in that context. Details are recorded in the [McPAT policy](../../configs/mcpat/model-v1.json).
 5. **Uncalibrated physical implementation.** Cache area/ports/buffers, equivalent NoC topology and controller models require calibration. Static and area growth, and hence thermal outcomes, strongly depend on them. NoC physical links and HotSpot adjacency are approximations of an abstract performance model.
 6. **Fixed leakage and restricted energy scope.** Leakage is fixed at 350 K even when HotSpot predicts a different temperature. There is no electrothermal feedback, DVFS, gating, throttling or off-chip DRAM energy. Energy and EDP inherit these exclusions.
 7. **Surrogate steady-state thermal model.** Power is spatially coarse and constant in time; geometry and cooling are assumed. The model does not supply transient temperatures, fine hotspots or a calibrated real package.
@@ -390,7 +390,7 @@ The report's current analysis environment is Python **3.10.12**, NumPy **2.2.6**
 | McPAT | `74d4759f3ba2dff8f5a69e07a68efdb46b42fb8c` |
 | HotSpot | `f18831e48cef5d62580585cca0d7fab6c71bc3cc` |
 
-Share this Markdown file together with `reports/non_warm_up/` to preserve relative image/data links. Raw multi-gigabyte checkpoints are unnecessary for reading the report. For independent regeneration, provide the hashed source artifacts listed in [input_sha256.json](reports/non_warm_up/data/input_sha256.json), the matching configuration/converter sources and recorded tool revisions. Intermediate CSVs support independent metric checks without running the simulators. The HTML bundles Plotly and opens offline; static plots need no JavaScript.
+Keep this report with its sibling `figures/`, `data/` and interactive HTML file under `reports/non_warm_up/`. Preserve the repository structure for links to configuration and script sources. Raw multi-gigabyte checkpoints are unnecessary for reading the report. For independent regeneration, provide the hashed source artifacts listed in [input_sha256.json](data/input_sha256.json), the matching configuration/converter sources and recorded tool revisions. Intermediate CSVs support independent metric checks without running the simulators. The HTML bundles Plotly and opens offline; static plots need no JavaScript.
 
 ### Complete case measurements
 
@@ -423,15 +423,15 @@ Values below are rounded for readability; CSVs retain additional digits. Tempera
 
 | File | Contents |
 | --- | --- |
-| [summary.csv](reports/non_warm_up/data/summary.csv) | 20 unique cases: time, power, temperature, area, energy and diagnostic counters |
-| [sweeps.csv](reports/non_warm_up/data/sweeps.csv) | 24 normalized rows with explicit sweep/baseline identity |
-| [power_components.csv](reports/non_warm_up/data/power_components.csv) | Disjoint component area, dynamic/static power and chip share |
-| [per_core.csv](reports/non_warm_up/data/per_core.csv) | Per-core retired work, throughput, power and temperature |
-| [thermal_blocks.csv](reports/non_warm_up/data/thermal_blocks.csv) | Block geometry, power and temperature for every case |
-| [power_scaling_intervals.csv](reports/non_warm_up/data/power_scaling_intervals.csv) | Adjacent-setting slopes, elasticity and speedup |
-| [mcpat_warnings.csv](reports/non_warm_up/data/mcpat_warnings.csv) | All 40 recorded L2 timing warnings |
-| [validation.json](reports/non_warm_up/data/validation.json) | Verification summary, policy/tool versions and analysis-source hash |
-| [input_sha256.json](reports/non_warm_up/data/input_sha256.json) | Source artifact paths and hashes |
+| [summary.csv](data/summary.csv) | 20 unique cases: time, power, temperature, area, energy and diagnostic counters |
+| [sweeps.csv](data/sweeps.csv) | 24 normalized rows with explicit sweep/baseline identity |
+| [power_components.csv](data/power_components.csv) | Disjoint component area, dynamic/static power and chip share |
+| [per_core.csv](data/per_core.csv) | Per-core retired work, throughput, power and temperature |
+| [thermal_blocks.csv](data/thermal_blocks.csv) | Block geometry, power and temperature for every case |
+| [power_scaling_intervals.csv](data/power_scaling_intervals.csv) | Adjacent-setting slopes, elasticity and speedup |
+| [mcpat_warnings.csv](data/mcpat_warnings.csv) | All 40 recorded L2 timing warnings |
+| [validation.json](data/validation.json) | Verification summary, policy/tool versions and analysis-source hash |
+| [input_sha256.json](data/input_sha256.json) | Source artifact paths and hashes |
 
 ### Figure download index
 
@@ -439,26 +439,26 @@ PNG is convenient for Markdown; SVG and PDF preserve vector graphics for present
 
 | Figure | Raster | Vector | Document |
 | --- | --- | --- | --- |
-| 01_tlp_speedup | [PNG](reports/non_warm_up/figures/01_tlp_speedup.png) | [SVG](reports/non_warm_up/figures/01_tlp_speedup.svg) | [PDF](reports/non_warm_up/figures/01_tlp_speedup.pdf) |
-| 02_ilp_speedup | [PNG](reports/non_warm_up/figures/02_ilp_speedup.png) | [SVG](reports/non_warm_up/figures/02_ilp_speedup.svg) | [PDF](reports/non_warm_up/figures/02_ilp_speedup.pdf) |
-| 03_tlp_power_temperature | [PNG](reports/non_warm_up/figures/03_tlp_power_temperature.png) | [SVG](reports/non_warm_up/figures/03_tlp_power_temperature.svg) | [PDF](reports/non_warm_up/figures/03_tlp_power_temperature.pdf) |
-| 04_ilp_power_temperature | [PNG](reports/non_warm_up/figures/04_ilp_power_temperature.png) | [SVG](reports/non_warm_up/figures/04_ilp_power_temperature.svg) | [PDF](reports/non_warm_up/figures/04_ilp_power_temperature.pdf) |
-| 05_tlp_normalized_power | [PNG](reports/non_warm_up/figures/05_tlp_normalized_power.png) | [SVG](reports/non_warm_up/figures/05_tlp_normalized_power.svg) | [PDF](reports/non_warm_up/figures/05_tlp_normalized_power.pdf) |
-| 06_ilp_normalized_power | [PNG](reports/non_warm_up/figures/06_ilp_normalized_power.png) | [SVG](reports/non_warm_up/figures/06_ilp_normalized_power.svg) | [PDF](reports/non_warm_up/figures/06_ilp_normalized_power.pdf) |
-| 07_tlp_component_power | [PNG](reports/non_warm_up/figures/07_tlp_component_power.png) | [SVG](reports/non_warm_up/figures/07_tlp_component_power.svg) | [PDF](reports/non_warm_up/figures/07_tlp_component_power.pdf) |
-| 08_ilp_component_power | [PNG](reports/non_warm_up/figures/08_ilp_component_power.png) | [SVG](reports/non_warm_up/figures/08_ilp_component_power.svg) | [PDF](reports/non_warm_up/figures/08_ilp_component_power.pdf) |
-| 09_dynamic_static_power | [PNG](reports/non_warm_up/figures/09_dynamic_static_power.png) | [SVG](reports/non_warm_up/figures/09_dynamic_static_power.svg) | [PDF](reports/non_warm_up/figures/09_dynamic_static_power.pdf) |
-| 10_component_dynamic_static | [PNG](reports/non_warm_up/figures/10_component_dynamic_static.png) | [SVG](reports/non_warm_up/figures/10_component_dynamic_static.svg) | [PDF](reports/non_warm_up/figures/10_component_dynamic_static.pdf) |
-| 11_tlp_energy_edp | [PNG](reports/non_warm_up/figures/11_tlp_energy_edp.png) | [SVG](reports/non_warm_up/figures/11_tlp_energy_edp.svg) | [PDF](reports/non_warm_up/figures/11_tlp_energy_edp.pdf) |
-| 12_ilp_energy_edp | [PNG](reports/non_warm_up/figures/12_ilp_energy_edp.png) | [SVG](reports/non_warm_up/figures/12_ilp_energy_edp.svg) | [PDF](reports/non_warm_up/figures/12_ilp_energy_edp.pdf) |
-| 13_tlp_tradeoff | [PNG](reports/non_warm_up/figures/13_tlp_tradeoff.png) | [SVG](reports/non_warm_up/figures/13_tlp_tradeoff.svg) | [PDF](reports/non_warm_up/figures/13_tlp_tradeoff.pdf) |
-| 14_ilp_tradeoff | [PNG](reports/non_warm_up/figures/14_ilp_tradeoff.png) | [SVG](reports/non_warm_up/figures/14_ilp_tradeoff.svg) | [PDF](reports/non_warm_up/figures/14_ilp_tradeoff.pdf) |
-| 15_tlp_work_diagnostics | [PNG](reports/non_warm_up/figures/15_tlp_work_diagnostics.png) | [SVG](reports/non_warm_up/figures/15_tlp_work_diagnostics.svg) | [PDF](reports/non_warm_up/figures/15_tlp_work_diagnostics.pdf) |
-| 16_ilp_work_diagnostics | [PNG](reports/non_warm_up/figures/16_ilp_work_diagnostics.png) | [SVG](reports/non_warm_up/figures/16_ilp_work_diagnostics.svg) | [PDF](reports/non_warm_up/figures/16_ilp_work_diagnostics.pdf) |
-| 17_power_elasticity | [PNG](reports/non_warm_up/figures/17_power_elasticity.png) | [SVG](reports/non_warm_up/figures/17_power_elasticity.svg) | [PDF](reports/non_warm_up/figures/17_power_elasticity.pdf) |
-| 18_area_and_static_cost | [PNG](reports/non_warm_up/figures/18_area_and_static_cost.png) | [SVG](reports/non_warm_up/figures/18_area_and_static_cost.svg) | [PDF](reports/non_warm_up/figures/18_area_and_static_cost.pdf) |
-| 19_temperature_power_density | [PNG](reports/non_warm_up/figures/19_temperature_power_density.png) | [SVG](reports/non_warm_up/figures/19_temperature_power_density.svg) | [PDF](reports/non_warm_up/figures/19_temperature_power_density.pdf) |
-| 20_tlp_thermal_floorplans | [PNG](reports/non_warm_up/figures/20_tlp_thermal_floorplans.png) | [SVG](reports/non_warm_up/figures/20_tlp_thermal_floorplans.svg) | [PDF](reports/non_warm_up/figures/20_tlp_thermal_floorplans.pdf) |
-| 21_ilp_thermal_floorplans | [PNG](reports/non_warm_up/figures/21_ilp_thermal_floorplans.png) | [SVG](reports/non_warm_up/figures/21_ilp_thermal_floorplans.svg) | [PDF](reports/non_warm_up/figures/21_ilp_thermal_floorplans.pdf) |
-| 22_per_core_work_and_temperature | [PNG](reports/non_warm_up/figures/22_per_core_work_and_temperature.png) | [SVG](reports/non_warm_up/figures/22_per_core_work_and_temperature.svg) | [PDF](reports/non_warm_up/figures/22_per_core_work_and_temperature.pdf) |
-| 23_mix_and_iq_pressure | [PNG](reports/non_warm_up/figures/23_mix_and_iq_pressure.png) | [SVG](reports/non_warm_up/figures/23_mix_and_iq_pressure.svg) | [PDF](reports/non_warm_up/figures/23_mix_and_iq_pressure.pdf) |
+| 01_tlp_speedup | [PNG](figures/01_tlp_speedup.png) | [SVG](figures/01_tlp_speedup.svg) | [PDF](figures/01_tlp_speedup.pdf) |
+| 02_ilp_speedup | [PNG](figures/02_ilp_speedup.png) | [SVG](figures/02_ilp_speedup.svg) | [PDF](figures/02_ilp_speedup.pdf) |
+| 03_tlp_power_temperature | [PNG](figures/03_tlp_power_temperature.png) | [SVG](figures/03_tlp_power_temperature.svg) | [PDF](figures/03_tlp_power_temperature.pdf) |
+| 04_ilp_power_temperature | [PNG](figures/04_ilp_power_temperature.png) | [SVG](figures/04_ilp_power_temperature.svg) | [PDF](figures/04_ilp_power_temperature.pdf) |
+| 05_tlp_normalized_power | [PNG](figures/05_tlp_normalized_power.png) | [SVG](figures/05_tlp_normalized_power.svg) | [PDF](figures/05_tlp_normalized_power.pdf) |
+| 06_ilp_normalized_power | [PNG](figures/06_ilp_normalized_power.png) | [SVG](figures/06_ilp_normalized_power.svg) | [PDF](figures/06_ilp_normalized_power.pdf) |
+| 07_tlp_component_power | [PNG](figures/07_tlp_component_power.png) | [SVG](figures/07_tlp_component_power.svg) | [PDF](figures/07_tlp_component_power.pdf) |
+| 08_ilp_component_power | [PNG](figures/08_ilp_component_power.png) | [SVG](figures/08_ilp_component_power.svg) | [PDF](figures/08_ilp_component_power.pdf) |
+| 09_dynamic_static_power | [PNG](figures/09_dynamic_static_power.png) | [SVG](figures/09_dynamic_static_power.svg) | [PDF](figures/09_dynamic_static_power.pdf) |
+| 10_component_dynamic_static | [PNG](figures/10_component_dynamic_static.png) | [SVG](figures/10_component_dynamic_static.svg) | [PDF](figures/10_component_dynamic_static.pdf) |
+| 11_tlp_energy_edp | [PNG](figures/11_tlp_energy_edp.png) | [SVG](figures/11_tlp_energy_edp.svg) | [PDF](figures/11_tlp_energy_edp.pdf) |
+| 12_ilp_energy_edp | [PNG](figures/12_ilp_energy_edp.png) | [SVG](figures/12_ilp_energy_edp.svg) | [PDF](figures/12_ilp_energy_edp.pdf) |
+| 13_tlp_tradeoff | [PNG](figures/13_tlp_tradeoff.png) | [SVG](figures/13_tlp_tradeoff.svg) | [PDF](figures/13_tlp_tradeoff.pdf) |
+| 14_ilp_tradeoff | [PNG](figures/14_ilp_tradeoff.png) | [SVG](figures/14_ilp_tradeoff.svg) | [PDF](figures/14_ilp_tradeoff.pdf) |
+| 15_tlp_work_diagnostics | [PNG](figures/15_tlp_work_diagnostics.png) | [SVG](figures/15_tlp_work_diagnostics.svg) | [PDF](figures/15_tlp_work_diagnostics.pdf) |
+| 16_ilp_work_diagnostics | [PNG](figures/16_ilp_work_diagnostics.png) | [SVG](figures/16_ilp_work_diagnostics.svg) | [PDF](figures/16_ilp_work_diagnostics.pdf) |
+| 17_power_elasticity | [PNG](figures/17_power_elasticity.png) | [SVG](figures/17_power_elasticity.svg) | [PDF](figures/17_power_elasticity.pdf) |
+| 18_area_and_static_cost | [PNG](figures/18_area_and_static_cost.png) | [SVG](figures/18_area_and_static_cost.svg) | [PDF](figures/18_area_and_static_cost.pdf) |
+| 19_temperature_power_density | [PNG](figures/19_temperature_power_density.png) | [SVG](figures/19_temperature_power_density.svg) | [PDF](figures/19_temperature_power_density.pdf) |
+| 20_tlp_thermal_floorplans | [PNG](figures/20_tlp_thermal_floorplans.png) | [SVG](figures/20_tlp_thermal_floorplans.svg) | [PDF](figures/20_tlp_thermal_floorplans.pdf) |
+| 21_ilp_thermal_floorplans | [PNG](figures/21_ilp_thermal_floorplans.png) | [SVG](figures/21_ilp_thermal_floorplans.svg) | [PDF](figures/21_ilp_thermal_floorplans.pdf) |
+| 22_per_core_work_and_temperature | [PNG](figures/22_per_core_work_and_temperature.png) | [SVG](figures/22_per_core_work_and_temperature.svg) | [PDF](figures/22_per_core_work_and_temperature.pdf) |
+| 23_mix_and_iq_pressure | [PNG](figures/23_mix_and_iq_pressure.png) | [SVG](figures/23_mix_and_iq_pressure.svg) | [PDF](figures/23_mix_and_iq_pressure.pdf) |

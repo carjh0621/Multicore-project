@@ -2,7 +2,7 @@
 
 This directory contains **shareable analysis outputs**, rather than raw simulator runs. The current study is the full-ROI, non-warm-up `v1` experiment: four PARSEC workloads × five hardware configurations = 20 measurements.
 
-Read [non_warm_up_analysis.md](../non_warm_up_analysis.md) for the findings, metric definitions, complete case table and limitations. Its plots live here so relative links work after cloning.
+Read [non_warm_up_AI_analysis.md](non_warm_up/non_warm_up_AI_analysis.md) for the findings, metric definitions, complete case table and limitations. Its plots live here so relative links work after cloning.
 
 ## Contents
 
@@ -10,6 +10,7 @@ Read [non_warm_up_analysis.md](../non_warm_up_analysis.md) for the findings, met
 reports/
 ├── README.md
 └── non_warm_up/
+    ├── non_warm_up_AI_analysis.md
     ├── data/
     │   ├── summary.csv
     │   ├── sweeps.csv
@@ -47,7 +48,7 @@ The extraction process:
 3. Compute ROI duration from ticks, and extract McPAT Runtime Dynamic plus fixed subthreshold/gate leakage. Calculate total power, energy and EDP.
 4. Separate detailed core logic, L1I, L1D, L2, network and controller power without double counting. Check chip-total conservation within printed rounding tolerance.
 5. Extract maximum named silicon-block temperature and per-block values, excluding interface/package nodes from the headline maximum.
-6. Normalize the core sweep to C1/W4 and width sweep to C4/W2, independently for each workload. Generate CSVs, plots, interactive HTML and the root report.
+6. Normalize the core sweep to C1/W4 and width sweep to C4/W2, independently for each workload. Generate CSVs, plots, interactive HTML and the analysis report.
 
 Performance uses **simulated ROI time**, not host execution time or `hostInstRate`. Energy is `average power × ROI seconds`; normalized energy is `power ratio / speedup`, and normalized EDP is `power ratio / speedup²`. Temperature changes use °C differences, not Celsius percentages.
 
@@ -88,7 +89,7 @@ Units appear in column names: `_w` is watts, `_j` joules, `_j_s` energy-delay pr
 | 22 | Eight-core retired-work shares and core temperatures |
 | 23 | Issued-operation mix and IQ-full rename events |
 
-Captions and PNG/SVG/PDF download links for all 23 figures are in the [full report](../non_warm_up_analysis.md). Connecting lines do not imply measurements at intermediate configurations.
+Captions and PNG/SVG/PDF download links for all 23 figures are in the [full report](non_warm_up/non_warm_up_AI_analysis.md). Connecting lines do not imply measurements at intermediate configurations.
 
 ## Regenerate and share
 
@@ -100,10 +101,10 @@ python3 -m venv .venv-analysis
 .venv-analysis/bin/python scripts/analyze_non_warm_up.py
 ```
 
-Optional `--results-root PATH` and `--output-dir PATH` select other locations. The script regenerates analysis assets and the root report; it does not run/rebuild simulators or modify raw results/checkpoints.
+Optional `--results-root PATH` and `--output-dir PATH` select other locations. The script regenerates analysis assets and the analysis report; it does not run/rebuild simulators or modify raw results/checkpoints.
 
 Full regeneration requires raw source artifacts, matching policies/tool revisions and McPAT/HotSpot executables matching the recorded binary hashes. Rebuilding with another compiler/environment may change those hashes even at the same source commit. CSVs support independent metric calculations, but the current script does not regenerate the complete report from CSVs alone. Either execute a new full flow with local builds or obtain matching original artifacts.
 
-Commit this directory together with the root report, `configs/`, `scripts/`, dependency file and submodule references. Keep raw outputs, checkpoints, downloaded resources and binaries outside normal Git history; share them separately if needed for reproduction. Paths in `input_sha256.json` identify original raw inputs and need not exist in a fresh clone.
+Commit this directory together with `configs/`, `scripts/`, dependency file and submodule references. Keep raw outputs, checkpoints, downloaded resources and binaries outside normal Git history; share them separately if needed for reproduction. Paths in `input_sha256.json` identify original raw inputs and need not exist in a fresh clone.
 
 The study has one observation per case. Power/area depend on approximate analytical mappings and need calibration, particularly cache/NoC costs. Temperature is equilibrium under sustained average power and assumed geometry/cooling, with fixed leakage and no thermal feedback. The report separates observed behavior, model-dependent estimates and hypotheses requiring further evidence.

@@ -870,7 +870,7 @@ The report's current analysis environment is Python **{audit['python']}**, NumPy
 | McPAT | `{audit['tool_commits']['mcpat']}` |
 | HotSpot | `{audit['tool_commits']['hotspot']}` |
 
-Share this Markdown file together with `reports/non_warm_up/` to preserve relative image/data links. Raw multi-gigabyte checkpoints are unnecessary for reading the report. For independent regeneration, provide the hashed source artifacts listed in [input_sha256.json]({base}/data/input_sha256.json), the matching configuration/converter sources and recorded tool revisions. Intermediate CSVs support independent metric checks without running the simulators. The HTML bundles Plotly and opens offline; static plots need no JavaScript.
+Keep this report with its sibling `figures/`, `data/` and interactive HTML file under `reports/non_warm_up/`. Preserve the repository structure for links to configuration and script sources. Raw multi-gigabyte checkpoints are unnecessary for reading the report. For independent regeneration, provide the hashed source artifacts listed in [input_sha256.json]({base}/data/input_sha256.json), the matching configuration/converter sources and recorded tool revisions. Intermediate CSVs support independent metric checks without running the simulators. The HTML bundles Plotly and opens offline; static plots need no JavaScript.
 
 ### Complete case measurements
 
@@ -900,7 +900,16 @@ PNG is convenient for Markdown; SVG and PDF preserve vector graphics for present
 | --- | --- | --- | --- |
 {gallery}
 """
-    (ROOT/"non_warm_up_analysis.md").write_text(text)
+    # Template links are repository-relative; the report lives beside its assets.
+    def rebase_link(match):
+        target = match.group(2)
+        if re.match(r"[A-Za-z][A-Za-z0-9+.-]*:", target) or target.startswith("#"):
+            return match.group(0)
+        path, marker, anchor = target.partition("#")
+        relative = Path(os.path.relpath(ROOT/path, output)).as_posix()
+        return match.group(1)+relative+(marker+anchor if marker else "")+match.group(3)
+    text = re.sub(r"(!?\[[^\]]*\]\()([^)]+)(\))", rebase_link, text)
+    (output/"non_warm_up_AI_analysis.md").write_text(text)
 
 
 def main():
