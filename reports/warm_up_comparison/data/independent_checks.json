@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "raw_cases_checked": 40,
+  "matched_cases_checked": 20,
+  "sweep_rows_checked": 48,
+  "original_published_cold_numeric_columns_reproduced": true,
+  "analysis_entrypoint_sha256": "ea38446bbec5330b869f702d0f312b1140ac2a265dace92cec2a8d4aee0c1a15",
+  "checks": "Raw tick/power calculations, paired ratios, own-scenario baselines and published reference metrics"
+}

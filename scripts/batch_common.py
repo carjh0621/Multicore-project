@@ -17,7 +17,7 @@ import time
 
 from gem5_to_mcpat import ROOT, ConversionError, parse_processor_power, read_json, require, sha256
 from mcpat_to_hotspot import parse_temperatures
-from roi_control import validate_checkpoint
+from roi_control import validate_checkpoint, pre_roi_warmup, validate_warmup, validate_reference_policy
 
 
 STAGES = ("prepare", "restore", "mcpat", "hotspot")
@@ -66,11 +66,19 @@ def file_required(path):
 class Context:
     def __init__(self, args):
         self.args = args
-        self.policy_path = ROOT / "configs/experiment-startup.json"
+        self.policy_path = (getattr(args, "policy", None) or ROOT / "configs/experiment-startup.json").resolve()
         self.policy = read_json(self.policy_path)
+        validate_reference_policy(self.policy, ROOT)
         self.policy_sha = sha256(self.policy_path)
         self.results = (args.results_root or ROOT / "results" / self.policy["revision"]).resolve()
         self.checkpoints = (args.checkpoints_root or ROOT / "checkpoints" / self.policy["revision"]).resolve()
+        if pre_roi_warmup(self.policy):
+            reference = read_json(ROOT / self.policy["reference"]["policy"])
+            for actual, parent in ((self.results, ROOT / "results" / reference["revision"]),
+                                   (self.checkpoints, ROOT / "checkpoints" / reference["revision"])):
+                parent = parent.resolve()
+                require(actual != parent and actual not in parent.parents and parent not in actual.parents,
+                        "Warm-up outputs must not overlap the frozen reference directories")
         require(self.results != self.checkpoints and self.results not in self.checkpoints.parents
                 and self.checkpoints not in self.results.parents, "Results/checkpoint roots must be separate, non-nested directories")
         benchmarks = args.benchmarks or self.policy["benchmarks"]
@@ -117,6 +125,12 @@ class Context:
         snapshot = read_json(path / "roi_stats.json")
         require(snapshot["simulated_begin_time"] == roi["begin_tick"] and snapshot["simulated_end_time"] == roi["end_tick"],
                 "ROI snapshot bounds differ")
+        if pre_roi_warmup(self.policy):
+            require(roi.get("warmup") == manifest.get("warmup") == self.policy["execution"]["warmup"],
+                    "Warm-up measurement policy mismatch")
+            for name in ("warmup.json", "warmup_stats.json"):
+                file_required(path / name)
+            validate_warmup(read_json(path / "warmup.json"), read_json(path / "warmup_stats.json"), roi)
         return roi
 
     def check_checkpoint(self, case):
@@ -124,7 +138,7 @@ class Context:
         file_required(path / "m5.cpt")
         file_required(path / "project_checkpoint.json")
         metadata = read_json(path / "project_checkpoint.json")
-        validate_checkpoint(metadata, {"policy_sha256": self.policy_sha, "benchmark": case.benchmark,
+        validate_checkpoint(metadata, {"policy": self.policy, "policy_sha256": self.policy_sha, "benchmark": case.benchmark,
                                        "cores": case.cores, "worker_threads": case.cores, "boot_cpu": "atomic",
                                        "tool_commits": self.commits, "smoke_ticks": 0})
         refs = re.findall(r"^(?:filename|cowFilename)=(.+)$", (path / "m5.cpt").read_text(), re.M)
@@ -150,6 +164,8 @@ class Context:
         require(power["mcpat_binary_sha256"] == self.digest(self.mcpat), "McPAT binary changed")
         self.verify_input_hashes(mapping["inputs"], [self.policy_path, ROOT / "configs/mcpat/model-v1.json"] +
                                  [run / n for n in ("roi.json", "roi_stats.json", "config.json", "stats.txt")])
+        if pre_roi_warmup(self.policy):
+            self.verify_input_hashes(mapping["inputs"], [run / "warmup.json", run / "warmup_stats.json"])
         parsed = parse_processor_power((path / "mcpat.txt").read_text())
         require(all(parsed[k] == power[k] for k in parsed), "Power JSON/report mismatch")
 
@@ -239,6 +255,7 @@ def make_plan(ctx, stage):
         else:
             job.command = [sys.executable, str(ROOT / "scripts/mcpat_to_hotspot.py"), "--run-dir", str(ctx.run_path(case)),
                            "--hotspot-binary", str(ctx.hotspot), "--run-hotspot"]
+        job.command.extend(["--policy", str(ctx.policy_path)])
         job.reason = "will archive invalid/incomplete artifacts before retry" if job.archive else "pending"
     return jobs
 
@@ -256,6 +273,8 @@ def freeze_inputs(ctx, stage):
              ROOT / "scripts/batch_common.py", ROOT / f"scripts/batch_{stage}.py",
              ROOT / "scripts/gem5_to_mcpat.py", ROOT / "scripts/mcpat_to_hotspot.py",
              ROOT / "configs/mcpat/model-v1.json", ROOT / "configs/hotspot/model-v1.json"]
+    if pre_roi_warmup(ctx.policy):
+        paths.append(ROOT / ctx.policy["reference"]["policy"])
     if stage in ("prepare", "restore"):
         for spec in (ctx.policy["kernel"], ctx.policy["disk"]):
             file_required(ROOT / "resources" / f"{spec['id']}-{spec['version']}")
@@ -370,6 +389,7 @@ def execute_jobs(ctx, stage, jobs):
 
 def stage_main(stage, argv=None):
     parser = argparse.ArgumentParser(description=f"Batch stage {stage}: five configurations × four workloads; skip validated results.")
+    parser.add_argument("--policy", type=Path, default=ROOT / "configs/experiment-startup.json")
     parser.add_argument("--jobs", type=int, default=2, help="Maximum concurrent processes (default: 2; use 1 for serial)")
     parser.add_argument("--dry-run", action="store_true", help="Inspect plan only; create no files or processes")
     parser.add_argument("--retry", action="store_true", help="Archive incomplete/invalid target directories, then retry; never delete them")

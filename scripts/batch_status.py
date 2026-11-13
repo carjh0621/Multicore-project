@@ -7,6 +7,7 @@ from pathlib import Path
 import sys
 
 from batch_common import Context, INVALID, ROOT, STAGES, file_required, read_json, require
+from roi_control import pre_roi_warmup
 
 
 class StaleResult(ValueError):
@@ -39,7 +40,8 @@ def quick_check(ctx, stage, case):
     data = read_json(marker)
     if stage == "prepare":
         identity(ctx, data["identity"], case, width=False)
-        require(data["identity"]["boundary"] == "workbegin", "Diagnostic checkpoint")
+        expected = "parsec_launch" if pre_roi_warmup(ctx.policy) else "workbegin"
+        require(data["identity"]["boundary"] == expected, "Wrong checkpoint boundary")
         if data["identity"]["gem5_commit"] != ctx.commits["gem5"]:
             raise StaleResult("Checkpoint gem5 revision differs")
         file_required(folder / "m5.cpt")
@@ -48,6 +50,13 @@ def quick_check(ctx, stage, case):
         require(data["status"] == "roi_complete", "ROI has not completed")
         for name in ("config.json", "stats.txt", "roi_stats.json", "run_manifest.json"):
             file_required(folder / name)
+        if pre_roi_warmup(ctx.policy):
+            for name in ("warmup.json", "warmup_stats.json"):
+                file_required(folder / name)
+            warmup = read_json(folder / "warmup.json")
+            identity(ctx, warmup, case)
+            require(warmup["status"] == "warmup_complete" and warmup["end_tick"] == data["begin_tick"],
+                    "Warm-up interval does not precede full ROI")
         manifest = read_json(folder / "run_manifest.json")
         identity(ctx, manifest, case)
         if manifest["tool_commits"]["gem5"] != ctx.commits["gem5"]:
@@ -168,6 +177,7 @@ def table(report, details=False):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--policy", type=Path, default=ROOT / "configs/experiment-startup.json")
     parser.add_argument("--verify", action="store_true", help="Fully validate completed artifacts (more disk I/O)")
     parser.add_argument("--details", action="store_true", help="Show active/failed/invalid case reasons, PIDs and logs")
     parser.add_argument("--json", action="store_true", help="Machine-readable output")

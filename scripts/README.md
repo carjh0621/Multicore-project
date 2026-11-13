@@ -36,6 +36,7 @@ Both prepare and restore use `run_parsec.py` and `roi_control.py`. Each batch co
 | [gem5_to_mcpat.py](gem5_to_mcpat.py) | Completed ROI/config/statistics + power policy → XML, mapping, detailed report and `power.json` |
 | [mcpat_to_hotspot.py](mcpat_to_hotspot.py) | McPAT results + thermal policy → floorplan, block power, cooling config and temperatures |
 | [analyze_non_warm_up.py](analyze_non_warm_up.py) | All 20 completed cases → extracted metrics, 23 figure sets, offline HTML and Markdown analysis |
+| [analyze_warm_up.py](analyze_warm_up.py) | Both 20-case datasets → warm report/23 figure sets, matched comparison/15 figure sets, CSVs, validation and offline HTML |
 
 The batch/control/converter scripts use the Python standard library. Analysis additionally needs [requirements-analysis.txt](../requirements-analysis.txt). Tools are built separately using the [project setup](../README.md#getting-started).
 
@@ -114,6 +115,7 @@ The viewer reads metadata/logs without signaling gem5 or launching simulations; 
 | Option on each batch entry point | Purpose |
 | --- | --- |
 | `--jobs N` | Maximum independent concurrent processes; default 2, use 1 for serial execution |
+| `--policy PATH` | Select experiment JSON; defaults to non-warm-up `configs/experiment-startup.json` |
 | `--dry-run` | Print `RUN`, `SKIP`, `BLOCKED` and planned commands without creating outputs or launching jobs |
 | `--retry` | Archive incomplete/stale target directories, then retry; keep validated completed work |
 | `--benchmarks blackscholes canneal` | Select a workload subset |
@@ -153,6 +155,39 @@ tmux new -s multicore
 
 Run the four-stage sequence there; detach with `Ctrl+B`, then `D`, and reconnect using `tmux attach -t multicore`. The host/WSL must remain running and awake. Interrupting a foreground batch stops its active child process groups. Concurrent cases use private outputs/copy-on-write state and read shared checkpoints without modifying them; gem5 listeners are disabled in batch jobs to avoid port contention. Concurrency affects host execution time, not the simulated-time metric.
 
+## Warm-up policy
+
+All four batch scripts, the status viewer and both converters support `--policy configs/experiment-warmup.json`. The gem5 runner supports the same selector. The policy's revision sets default local roots to `results/warmup-v1/` and `checkpoints/warmup-v1/`; pass the selector consistently at every stage.
+
+Unlike the default workflow, warm-up preparation saves at the PARSEC launch marker. Restore switches to O3 before application initialization, captures its statistics at `WORKBEGIN`, resets counters while retaining state, then measures the full ROI. An old at-ROI checkpoint cannot supply this earlier execution. See the [configuration guide](../configs/README.md#warm-up-policy) for identities and validation.
+
+Start with the [single C4/W4 pilot](../README.md#warm-up-evaluation). After its measured ROI finishes, run its converters:
+
+```bash
+python3 scripts/gem5_to_mcpat.py --policy configs/experiment-warmup.json \
+  --run-dir results/warmup-v1/blackscholes-c4-w4 --run-mcpat
+python3 scripts/mcpat_to_hotspot.py --policy configs/experiment-warmup.json \
+  --run-dir results/warmup-v1/blackscholes-c4-w4 --run-hotspot
+```
+
+When the pilot and its warm-up/ROI artifacts pass validation, use the same stage ordering for all 20 cases:
+
+```bash
+python3 scripts/batch_prepare.py --policy configs/experiment-warmup.json --jobs 2 && \
+python3 scripts/batch_restore.py --policy configs/experiment-warmup.json --jobs 2 && \
+python3 scripts/batch_mcpat.py --policy configs/experiment-warmup.json --jobs 2 && \
+python3 scripts/batch_hotspot.py --policy configs/experiment-warmup.json --jobs 2
+```
+
+Compatible completed pilot work is skipped. The matrix still needs 12 preparations and 20 measurements. The earlier checkpoints omit repeated boot, but O3 initialization repeats per hardware case and can be expensive; it is excluded from reported ROI time, energy and power. Its duration/counters remain in `warmup.json` and `warmup_stats.json` for inspection.
+
+```bash
+python3 scripts/batch_status.py --policy configs/experiment-warmup.json --details
+python3 scripts/batch_status.py --policy configs/experiment-warmup.json --verify
+```
+
+The completed non-warm-up reference and report stay intact. Both scenarios are complete; use the separate warm-analysis entry point below. The `analyze_non_warm_up.py` CLI remains dedicated to the original policy.
+
 ## Analysis
 
 With analysis dependencies installed and all 20 cases complete:
@@ -162,3 +197,13 @@ With analysis dependencies installed and all 20 cases complete:
 ```
 
 Analysis imports shared validators and converter parsers, verifies saved binary identities, rereads ROI activity/disjoint powers and normalizes both sweeps. It does not invoke simulator executables. The [reports guide](../reports/README.md) explains source artifacts, derived tables, figure families and provenance requirements.
+
+For the completed warm scenario and its matched cold comparison:
+
+```bash
+.venv-analysis/bin/python scripts/analyze_warm_up.py
+```
+
+This explicitly supplies the warm policy to shared extraction, re-extracts the cold reference into the comparison directory and checks resolved hardware and paired geometry. It writes `reports/warm_up/` and `reports/warm_up_comparison/` only. Matching uses workload/core/width identity; each scenario retains its own normalization baseline. Quiesce/active-cycle diagnostics help distinguish inactive time from changes in throughput while active, without claiming a specific scheduler cause.
+
+`--extract-only` validates and writes tables without plots/reports. `--reuse-extracted` rechecks all input hashes and shared-extractor identity before reusing parsed data and recalculating the comparison. The interpretation template describes the current v1 dataset; review its narrative if replacing measurements. Published CSVs alone cannot satisfy the full source/binary-provenance checks.

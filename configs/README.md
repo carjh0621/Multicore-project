@@ -8,6 +8,7 @@ This directory defines **which experiments run**, **how gem5 executes them**, an
 configs/
 ├── README.md
 ├── experiment-startup.json
+├── experiment-warmup.json
 ├── gem5/run_parsec.py
 ├── mcpat/model-v1.json
 └── hotspot/model-v1.json
@@ -16,6 +17,7 @@ configs/
 | File | Defines | Read by |
 | --- | --- | --- |
 | [experiment-startup.json](experiment-startup.json) | Workloads, sweeps, clock/voltage, CPU/cache/memory settings, kernel/disk versions, ROI policy and common power/thermal settings | gem5 runner, batch orchestration, converters and analysis |
+| [experiment-warmup.json](experiment-warmup.json) | Same hardware/input matrix, with O3 initialization before measuring the full ROI; records the reference policy hash | Runner, batch scripts and converters selected with `--policy` |
 | [gem5/run_parsec.py](gem5/run_parsec.py) | Actual board/CPU objects, guest launch command, resources, checkpoint execution and ROI output | gem5 executable; host Python supports `--describe` for inspection |
 | [mcpat/model-v1.json](mcpat/model-v1.json) | Physical hardware/activity mappings not directly recoverable from gem5 | `scripts/gem5_to_mcpat.py` and analysis |
 | [hotspot/model-v1.json](hotspot/model-v1.json) | Area-derived placement, package/material/cooling assumptions and conservation tolerance | `scripts/mcpat_to_hotspot.py`; identity checked by shared validators |
@@ -47,6 +49,18 @@ The runner creates an X86 board with a switchable Atomic/O3 processor, Ruby `MES
 The guest's early `m5 exit` is a launch marker, not the CPU-switch point. Atomic with Ruby bypasses caches. Detailed execution begins at the ROI, so startup effects are included and no warm-up prefix is excluded. On restore, `WORKBEGIN` has already occurred; the host begins measurement after switching instead of waiting for a second marker.
 
 Checkpoints are specific to workload, core/thread count, policy and gem5 revision. The four-core checkpoint can serve widths 2/4/8 because detailed O3 cores were inactive when saved. It cannot serve another core count. Four workloads × three core counts give 12 checkpoints for the 20 cases. At-ROI checkpoints cannot recover earlier detailed warm-up execution.
+
+### Warm-up policy
+
+`--policy configs/experiment-warmup.json` selects revision `warmup-v1`. It is checked against the original policy's hash and hardware/workload fields. Only the revision, execution policy and explicit reference metadata differ. Physical-model JSON files remain identical so a later comparison does not conflate warm-up with a changed power or cooling model.
+
+For this policy, `prepare` stops at the earlier guest launch `m5 exit`, before PARSEC initialization. `restore` switches to target O3 there and runs through initialization. At `WORKBEGIN`, the host dumps/captures `warmup_stats.json`, writes `warmup.json`, and resets only counters; CPU/cache state stays active. Timing and power measurement then cover the full `WORKBEGIN`→`WORKEND` ROI. No CPU switch occurs at the warmed ROI boundary.
+
+Warm-up metadata records exact ticks, excluded initialization seconds, method, benchmark, cores, width and policy hash. Validation requires a nonempty detailed interval ending exactly at ROI entry, matching snapshot bounds and committed guest instructions. These checks demonstrate that pre-ROI execution occurred; they do not prove that every relevant predictor/cache structure has converged.
+
+Both 20-case datasets have completed. The [matched analysis](../reports/warm_up_comparison/warm_up_vs_non_warm_up_AI_analysis.md) additionally verifies equal resolved O3/cache/memory settings, area/leakage/clocks and identical paired floorplans/cooling configs. It distinguishes retained microarchitectural state from possible changes in guest scheduling/history.
+
+The two checkpoint kinds have distinct boundary identities (`workbegin` versus `parsec_launch`) and policy hashes. Warm-up batch output roots cannot overlap the frozen `v1` directories. Each target width must run its own detailed initialization after restoring a shared architectural launch checkpoint. See the [warm-up commands](../scripts/README.md#warm-up-policy).
 
 ## McPAT mapping
 

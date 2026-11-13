@@ -2,7 +2,7 @@
 
 This project connects **gem5, McPAT and HotSpot** to evaluate the performance, power and temperature of multicore out-of-order CPUs. It studies how adding cores and widening pipelines affect execution time, chip power, energy and modeled steady-state temperature.
 
-The workloads are PARSEC 3.0 `simsmall`: **blackscholes, canneal, freqmine and streamcluster**, measured over their regions of interest (ROIs). All **20 non-warm-up cases** have completed the flow. Read the [full analysis](reports/non_warm_up/non_warm_up_AI_analysis.md) for the findings and limitations, or browse the [reports guide](reports/README.md) for data and plots. Reading the published report requires no simulator build.
+The workloads are PARSEC 3.0 `simsmall`: **blackscholes, canneal, freqmine and streamcluster**, measured over their regions of interest (ROIs). Both scenarios have completed all **20 cases each**. Read the [non-warm-up analysis](reports/non_warm_up/non_warm_up_AI_analysis.md), [warm-up analysis](reports/warm_up/warm_up_AI_analysis.md) and [matched comparison](reports/warm_up_comparison/warm_up_vs_non_warm_up_AI_analysis.md), or browse the [reports guide](reports/README.md) for data and plots. Reading the reports requires no simulator build.
 
 ## Experiment
 
@@ -51,6 +51,7 @@ Multicore-project/
 ├── configs/
 │   ├── README.md                   # Settings, consumers and ROI behavior
 │   ├── experiment-startup.json     # Experiment matrix and common policy
+│   ├── experiment-warmup.json      # Same hardware, pre-ROI O3 initialization
 │   ├── gem5/run_parsec.py           # Board, CPUs, guest workload and execution
 │   ├── mcpat/model-v1.json         # Power-model assumptions
 │   └── hotspot/model-v1.json       # Thermal-model assumptions
@@ -66,14 +67,13 @@ Multicore-project/
 │   ├── roi_control.py              # ROI events and checkpoint compatibility
 │   ├── gem5_to_mcpat.py
 │   ├── mcpat_to_hotspot.py
-│   └── analyze_non_warm_up.py
+│   ├── analyze_non_warm_up.py
+│   └── analyze_warm_up.py           # Warm analysis and matched comparison
 └── reports/
     ├── README.md                   # Data sources, extraction and figure guide
-    └── non_warm_up/
-        ├── non_warm_up_AI_analysis.md # Full interpretation of the study
-        ├── data/                   # Extracted metrics and provenance
-        ├── figures/                # 23 figures, each in PNG/SVG/PDF
-        └── interactive_tradeoffs.html
+    ├── non_warm_up/                 # Frozen cold report, data and 23 figure sets
+    ├── warm_up/                     # Warm report, data and 23 figure sets
+    └── warm_up_comparison/          # Matched report, data and 15 figure sets
 ```
 
 Runtime files are created locally and excluded from Git:
@@ -183,6 +183,51 @@ python3 -m venv .venv-analysis
 ```
 
 This validates saved artifacts and regenerates the analysis report, CSVs, 23 static figure sets and offline interactive chart. It does not run simulators. Full provenance-checked regeneration requires raw results and McPAT/HotSpot executables matching the recorded binary hashes; published CSVs alone are insufficient. See [reports/README.md](reports/README.md) for extraction and sharing details.
+
+## Warm-up evaluation
+
+The separate [warm-up policy](configs/experiment-warmup.json) preserves the same hardware, workloads and complete ROI as the frozen non-warm-up reference. Its paths default to `results/warmup-v1/` and `checkpoints/warmup-v1/`; the reference remains under `v1/`.
+
+```text
+Atomic boot → PARSEC launch marker → save earlier checkpoint
+restore → switch to target O3 → detailed PARSEC initialization
+        → WORKBEGIN: capture warm-up, reset counters only
+        → full measured ROI → WORKEND
+```
+
+The existing `WORKBEGIN` checkpoints are too late for this method and cannot be reused. New launch checkpoints can still be shared across widths at the same benchmark/core count. Initialization runs on the target O3 configuration and may take substantial host time. It provides pre-ROI state, but does not establish convergence to representative steady-state ROI behavior.
+
+First inspect the settings and run **one blackscholes C4/W4 pilot** with cached resources and fresh destinations:
+
+```bash
+python3 configs/gem5/run_parsec.py --policy configs/experiment-warmup.json --describe
+
+external/gem5/build/X86_MESI_Two_Level/gem5.opt \
+  --listener-mode=off -d results/warmup-v1/blackscholes-c4-prepare \
+  configs/gem5/run_parsec.py --policy configs/experiment-warmup.json \
+  --mode prepare --benchmark blackscholes --cores 4 --width 4 \
+  --checkpoint-dir checkpoints/warmup-v1/blackscholes-c4 --boot-cpu atomic --offline
+
+external/gem5/build/X86_MESI_Two_Level/gem5.opt \
+  --listener-mode=off -d results/warmup-v1/blackscholes-c4-w4 \
+  configs/gem5/run_parsec.py --policy configs/experiment-warmup.json \
+  --mode restore --benchmark blackscholes --cores 4 --width 4 \
+  --checkpoint-dir checkpoints/warmup-v1/blackscholes-c4 --boot-cpu atomic --offline
+```
+
+The measured case should have `warmup.json`/`warmup_stats.json` for initialization and `roi.json`/`roi_stats.json` for the full ROI. The converter/batch validators reject missing warm-up provenance or an incorrect checkpoint boundary. Use the [scripts guide](scripts/README.md#warm-up-policy) for pilot conversion and the subsequent 20-case sequence. Monitor the warm-up matrix with:
+
+```bash
+python3 scripts/batch_status.py --policy configs/experiment-warmup.json --details
+```
+
+Both scenarios are now complete. Regenerate the warm-up report and matched comparison with:
+
+```bash
+.venv-analysis/bin/python scripts/analyze_warm_up.py
+```
+
+This validates/re-extracts both datasets, writes the two new report directories and preserves the original cold publication. The [comparison](reports/warm_up_comparison/warm_up_vs_non_warm_up_AI_analysis.md) includes activity/quiesce diagnostics and identifies changed scaling conclusions. It does not claim that pre-ROI initialization proves microarchitectural convergence or isolates cache effects. The original `analyze_non_warm_up.py` CLI remains dedicated to the cold study; the new entry point explicitly selects the warm policy through shared extraction helpers.
 
 ## Third-party software and licenses
 

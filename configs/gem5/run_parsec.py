@@ -14,8 +14,10 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
-from roi_control import RoiControl, checkpoint_identity, validate_checkpoint
+from roi_control import (RoiControl, checkpoint_identity, validate_checkpoint,
+                         pre_roi_warmup, validate_warmup, validate_reference_policy)
 parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--policy", type=Path, default=ROOT / "configs/experiment-startup.json")
 parser.add_argument("--benchmark", default="blackscholes")
 parser.add_argument("--cores", type=int, default=4)
 parser.add_argument("--width", type=int, default=4)
@@ -40,8 +42,13 @@ if args.smoke_ticks and (args.cores != 1 or args.boot_cpu != "atomic"):
     parser.error("Early-boot smoke tests require --cores 1 --boot-cpu atomic")
 if args.checkpoint_dir is not None:
     args.checkpoint_dir = args.checkpoint_dir.resolve()
-policy_path = ROOT / "configs/experiment-startup.json"
+policy_path = args.policy.resolve()
 policy = json.loads(policy_path.read_text())
+try:
+    warmup_before_roi = pre_roi_warmup(policy)
+    validate_reference_policy(policy, ROOT)
+except ValueError as exc:
+    parser.error(str(exc))
 if args.benchmark not in policy["benchmarks"]:
     parser.error("Benchmark is not part of the startup experiment")
 if not (args.smoke_ticks and args.width in policy["widths"]) and not (
@@ -52,6 +59,7 @@ if not (args.smoke_ticks and args.width in policy["widths"]) and not (
 
 run = {
     "policy": policy,
+    "policy_path": str(policy_path),
     "policy_sha256": hashlib.sha256(policy_path.read_bytes()).hexdigest(),
     "benchmark": args.benchmark,
     "cores": args.cores,
@@ -93,7 +101,7 @@ requires(
 m5.ticks.setGlobalFrequency("1THz")
 outdir = Path(m5.options.outdir)
 outdir.mkdir(parents=True, exist_ok=True)
-for filename in ("run_manifest.json", "roi.json", "roi_stats.json"):
+for filename in ("run_manifest.json", "roi.json", "roi_stats.json", "warmup.json", "warmup_stats.json"):
     if (outdir / filename).exists():
         parser.error("Output directory contains a previous run; use a fresh -d directory")
 run["tool_commits"] = {
@@ -146,8 +154,8 @@ board = X86Board(
     cache_hierarchy=MESITwoLevelCacheHierarchy(**policy["cache"]),
 )
 board.cache_line_size = policy["cache_line_bytes"]
-# The guest launch marker only reports a milestone. Keep the fast CPU active
-# through application setup; switch to O3 at WORKBEGIN.
+# The selected policy decides whether the launch marker starts O3 initialization
+# or the fast CPU continues until WORKBEGIN. The measured ROI always starts there.
 guest_command = f"""#!/bin/bash
 set -e
 trap 'm5 exit' EXIT
@@ -189,7 +197,22 @@ def capture_roi_stats():
     shutil.copyfile(outdir / "stats.json", outdir / "roi_stats.json")
 
 
-control = RoiControl(args.mode, m5, processor, capture_roi_stats)
+def capture_warmup_stats():
+    shutil.copyfile(outdir / "stats.json", outdir / "warmup_stats.json")
+    metadata = {
+        "status": "warmup_complete", "method": "pre_roi_initialization",
+        "begin_tick": control.warmup_begin, "end_tick": control.warmup_end,
+        "ticks_per_second": 10**12,
+        "warmup_seconds": (control.warmup_end-control.warmup_begin)/10**12,
+        "benchmark": args.benchmark, "cores": args.cores, "width": args.width,
+        "policy_sha256": run["policy_sha256"],
+        "scope": "O3 PARSEC launcher/initialization before full WORKBEGIN-to-WORKEND ROI",
+    }
+    (outdir / "warmup.json").write_text(json.dumps(metadata, indent=2)+"\n")
+
+
+control = RoiControl(args.mode, m5, processor, capture_roi_stats,
+                     warmup_before_roi=warmup_before_roi, capture_warmup=capture_warmup_stats)
 
 
 def on_max_tick():
@@ -214,7 +237,7 @@ if args.mode == "restore":
     # Pinned v26 API: instantiate/restore without advancing guest instructions.
     # Complete startup before takeOverFrom() initializes O3 pipeline structures.
     # A zero-tick simulate performs startup without advancing simulated time.
-    # The saved WORKBEGIN event has already been consumed; do not wait for it.
+    # Resume after the saved marker: launch for warm-up, WORKBEGIN for cold runs.
     simulator._instantiate()
     restored_tick = m5.curTick()
     m5.simulate(0)
@@ -264,5 +287,8 @@ summary = {
     "mode": args.mode,
     "warmup": run["warmup"],
 }
+if warmup_before_roi:
+    validate_warmup(json.loads((outdir / "warmup.json").read_text()),
+                    json.loads((outdir / "warmup_stats.json").read_text()), summary)
 (outdir / "roi.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary, indent=2))

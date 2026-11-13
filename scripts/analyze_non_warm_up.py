@@ -23,8 +23,9 @@ import numpy as np
 import pandas as pd
 
 from batch_common import Context
-from gem5_to_mcpat import ROOT, Converter, objects, partition_ops, read_json, require, sha256
+from gem5_to_mcpat import ROOT, Converter, objects, partition_ops, read_json, require, sha256, select_roi_dump
 from mcpat_to_hotspot import parse_mcpat, disjoint_blocks
+from roi_control import pre_roi_warmup
 
 BENCHMARKS = ["blackscholes", "canneal", "freqmine", "streamcluster"]
 COLORS = dict(zip(BENCHMARKS, ["#0072B2", "#D55E00", "#009E73", "#CC79A7"]))
@@ -48,15 +49,18 @@ def component_key(block):
     return {"l2_cache": "l2"}.get(block["category"], block["category"])
 
 
-def load_data(results_root, output):
-    args = SimpleNamespace(results_root=results_root, checkpoints_root=None, benchmarks=None,
+def load_data(results_root, output, policy_path=None):
+    """Shared validated extraction; the warm-up analyzer explicitly supplies its policy."""
+    args = SimpleNamespace(policy=policy_path, results_root=results_root, checkpoints_root=None, benchmarks=None,
                            gem5_binary=ROOT/"external/gem5/build/X86_MESI_Two_Level/gem5.opt",
                            mcpat_binary=ROOT/"external/mcpat/mcpat", hotspot_binary=ROOT/"external/hotspot/hotspot")
     ctx = Context(args)
     require(ctx.policy["benchmarks"] == BENCHMARKS, "This analysis expects the four v1 workloads")
     require(set((c.cores, c.width) for c in ctx.cases) == set(CONFIGS), "Unexpected hardware matrix")
-    require(ctx.policy["execution"]["warmup"] == "no_excluded_warmup; cold-start effects included in full ROI",
-            "This report is specifically for the non-warm-up policy")
+    warmed = pre_roi_warmup(ctx.policy)
+    require((policy_path is not None and warmed) or
+            ctx.policy["execution"]["warmup"] == "no_excluded_warmup; cold-start effects included in full ROI",
+            "Warm-up extraction requires an explicit warm-up policy")
     records, components, core_rows, blocks, provenance, warnings = [], [], [], [], [], []
     manifests = []
     for case in ctx.cases:
@@ -96,6 +100,16 @@ def load_data(results_root, output):
         row["effective_peak_thermal_resistance_k_w"] = row["temperature_rise_k"]/row["total_power_w"]
         row["dynamic_energy_j"] = row["runtime_dynamic_w"]*seconds
         row["static_energy_j"] = row["static_w"]*seconds
+        if warmed:
+            warmup = read_json(run/"warmup.json")
+            warm_snapshot = read_json(run/"warmup_stats.json")
+            warm_stats, _, _ = select_roi_dump((run/"stats.txt").read_text(), warmup["begin_tick"], warmup["end_tick"])
+            row["warmup_seconds"] = warmup["warmup_seconds"]
+            row["warmup_to_roi_time_ratio"] = warmup["warmup_seconds"]/seconds
+            row["warmup_architectural_instructions"] = warm_snapshot["simInsts"]["value"]
+            row["warmup_committed_micro_ops"] = warm_snapshot["simOps"]["value"]
+            row["warmup_l1d_demand_accesses"] = sum(warm_stats[x["L1Dcache"]["path"]+".m_demand_accesses"] for x in c.l1)
+            row["warmup_l2_demand_misses"] = sum(warm_stats[x["L2cache"]["path"]+".m_demand_misses"] for x in c.l2)
         for name, cache_name, controllers in (("l1i", "L1Icache", c.l1), ("l1d", "L1Dcache", c.l1), ("l2", "L2cache", c.l2)):
             for suffix in ("hits", "misses", "accesses"):
                 row[f"{name}_demand_{suffix}"] = sum(c.stat(ctrl[cache_name]["path"]+".m_demand_"+suffix) for ctrl in controllers)
@@ -137,6 +151,12 @@ def load_data(results_root, output):
             core_rows.append({**identity, "core_id": i, "architectural_instructions": ci, "committed_micro_ops": cu,
                               "uops_fraction": cu/uops, "arch_ipc_wall": ci/c.native_cycles, "uipc_wall": cu/c.native_cycles,
                               "active_tick_fraction": (c.stat(prefix+"numCycles")-c.stat(prefix+"idleCycles"))/c.native_cycles,
+                              "num_cycles": c.stat(prefix+"numCycles"), "idle_cycles": c.stat(prefix+"idleCycles"),
+                              # Pinned CPUStats declares .prereq(stat) for these:
+                              # an absent counter is its explicitly suppressed zero.
+                              "quiesce_cycles": c.stat(prefix+"quiesceCycles") if prefix+"quiesceCycles" in c.stats else 0,
+                              "quiesce_counter_zero_suppressed": prefix+"quiesceCycles" not in c.stats,
+                              "times_idled": c.stat(prefix+"timesIdled") if prefix+"timesIdled" in c.stats else 0,
                               "total_power_w": sum(b["total_average_w"] for b in cblocks),
                               "max_temperature_c": max(temp_by_name[b["name"]] for b in cblocks),
                               "forwardComSize": cpu["forwardComSize"], "backComSize": cpu["backComSize"]})
@@ -148,6 +168,10 @@ def load_data(results_root, output):
         for key, value in mixes.items():
             row["issued_"+key+"_fraction"] = value/total_issued
         selected = [x for x in core_rows if x["case"] == case.name]
+        row["mean_active_tick_fraction"] = float(np.mean([x["active_tick_fraction"] for x in selected]))
+        row["uipc_per_active_cycle"] = row["uipc_per_core_wall"]/row["mean_active_tick_fraction"]
+        row["quiesce_cycles_per_elapsed_core_cycle"] = sum(x["quiesce_cycles"] for x in selected)/(case.cores*c.native_cycles)
+        row["idle_cycles_per_elapsed_core_cycle"] = sum(x["idle_cycles"] for x in selected)/(case.cores*c.native_cycles)
         row["per_core_uop_cv"] = float(np.std([x["committed_micro_ops"] for x in selected])/np.mean([x["committed_micro_ops"] for x in selected]))
         for b in mapping["blocks"]:
             blocks.append({**identity, **b, "temperature_c": temp_by_name[b["name"]]})
@@ -159,9 +183,10 @@ def load_data(results_root, output):
                                "chip_power_share": metrics["total_average_w"]/row["disjoint_power_w"]})
         for warning in power.get("mcpat_warnings", []):
             warnings.append({"case": case.name, "warning": warning})
-        for n in ("roi.json", "run_manifest.json", "config.json", "stats.txt", "roi_stats.json",
+        source_files = ("roi.json", "run_manifest.json", "config.json", "stats.txt", "roi_stats.json",
                   "mcpat/input.xml", "mcpat/mapping.json", "mcpat/power.json", "mcpat/mcpat.txt",
-                  "hotspot/mapping.json", "hotspot/temperature.json", "hotspot/steady.temp", "hotspot/floorplan.flp"):
+                  "hotspot/mapping.json", "hotspot/temperature.json", "hotspot/steady.temp", "hotspot/floorplan.flp")
+        for n in source_files + (("warmup.json", "warmup_stats.json") if warmed else ()):
             path = run/n
             provenance.append({"case": case.name, "file": str(path.relative_to(ROOT)), "sha256": ctx.digest(path)})
         records.append(row)
@@ -451,7 +476,7 @@ def make_figures(output, df, sweeps, comp, core, blocks, slopes):
     save_figure(fig,output,"23_mix_and_iq_pressure")
 
 
-def interactive_plot(output, sweeps):
+def interactive_plot(output, sweeps, scenario="Non-warm-up"):
     import plotly
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
@@ -468,7 +493,7 @@ def interactive_plot(output, sweeps):
         fig.add_trace(go.Scatter(x=[0,limit],y=[0,limit],mode="lines",line=dict(color="gray",dash="dash"),name="Equal ROI energy",showlegend=column==1,hoverinfo="skip"),row=1,col=column)
         fig.update_xaxes(title_text="Normalized speedup",row=1,col=column)
         fig.update_yaxes(title_text="Normalized average power",row=1,col=column)
-    fig.update_layout(title="Non-warm-up ROI tradeoffs · hover points for metrics · below diagonal saves ROI energy",height=600,width=1200,template="plotly_white")
+    fig.update_layout(title=scenario+" ROI tradeoffs · hover points for metrics · below diagonal saves ROI energy",height=600,width=1200,template="plotly_white")
     fig.write_html(output/"interactive_tradeoffs.html",include_plotlyjs=True,full_html=True)
     return plotly.__version__
 

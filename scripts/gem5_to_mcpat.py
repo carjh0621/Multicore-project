@@ -15,6 +15,7 @@ import re
 import subprocess
 import sys
 import xml.etree.ElementTree as ET
+from roi_control import pre_roi_warmup, validate_warmup, validate_reference_policy
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -119,6 +120,7 @@ class Converter:
         self.run_dir = Path(run_dir)
         self.policy_path, self.model_path = Path(policy_path), Path(model_path)
         self.policy = read_json(self.policy_path)
+        validate_reference_policy(self.policy, ROOT)
         self.model = read_json(self.model_path)
         require(self.model["schema_version"] == 1, "Unsupported model schema")
         self.roi = read_json(self.run_dir / "roi.json")
@@ -180,6 +182,16 @@ class Converter:
             "inputs": {str(p): sha256(p) for p in [self.policy_path, self.model_path] +
                        [self.run_dir / f for f in ("roi.json", "roi_stats.json", "config.json", "stats.txt")]},
         }
+        if pre_roi_warmup(self.policy):
+            require(r.get("warmup") == self.policy["execution"]["warmup"], "Warm-up ROI policy mismatch")
+            paths = [self.run_dir / name for name in ("warmup.json", "warmup_stats.json")]
+            validate_warmup(read_json(paths[0]), read_json(paths[1]), r)
+            self.report["inputs"].update({str(p): sha256(p) for p in paths})
+            self.report["limitations"] = [x for x in self.model["limitations"]
+                                           if not x.startswith("Cold-start effects are included")]
+            self.report["limitations"].append(
+                "O3 PARSEC initialization precedes the full ROI and is excluded from reported ROI time/power; "
+                "initialization coverage is workload-dependent and does not establish warm-up convergence.")
         manifest_path = self.run_dir / "run_manifest.json"
         if manifest_path.is_file():
             manifest = read_json(manifest_path)

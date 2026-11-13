@@ -1,28 +1,36 @@
 # Reports and extracted data
 
-This directory contains **shareable analysis outputs**, rather than raw simulator runs. The current study is the full-ROI, non-warm-up `v1` experiment: four PARSEC workloads × five hardware configurations = 20 measurements.
+This directory contains **shareable analysis outputs**, rather than raw simulator runs. Both full-ROI scenarios have completed: four PARSEC workloads × five hardware configurations × two methodologies = 40 measurements, with one observation per scenario/case.
 
-Read [non_warm_up_AI_analysis.md](non_warm_up/non_warm_up_AI_analysis.md) for the findings, metric definitions, complete case table and limitations. Its plots live here so relative links work after cloning.
+| Report | Contents |
+| --- | --- |
+| [Non-warm-up analysis](non_warm_up/non_warm_up_AI_analysis.md) | Preserved original cold results and 23 figure sets |
+| [Warm-up analysis](warm_up/warm_up_AI_analysis.md) | Pre-ROI initialization scenario, its scaling/costs and 23 figure sets |
+| [Matched comparison](warm_up_comparison/warm_up_vs_non_warm_up_AI_analysis.md) | 20 paired cases, changed conclusions, activity/quiesce diagnostics and 15 figure sets |
+
+Each report keeps its figures/data alongside it so relative links work after cloning. All figure sets include PNG, SVG and PDF. The original non-warm-up publication is unchanged.
 
 ## Contents
 
 ```text
 reports/
 ├── README.md
-└── non_warm_up/
-    ├── non_warm_up_AI_analysis.md
-    ├── data/
-    │   ├── summary.csv
-    │   ├── sweeps.csv
-    │   ├── power_components.csv
-    │   ├── per_core.csv
-    │   ├── thermal_blocks.csv
-    │   ├── power_scaling_intervals.csv
-    │   ├── mcpat_warnings.csv
-    │   ├── input_sha256.json
-    │   └── validation.json
-    ├── figures/                    # Figures 01–23, each as PNG/SVG/PDF
-    └── interactive_tradeoffs.html
+├── non_warm_up/
+│   ├── non_warm_up_AI_analysis.md
+│   ├── data/                      # Original metrics and provenance
+│   ├── figures/                   # Original 23 figure sets
+│   └── interactive_tradeoffs.html
+├── warm_up/
+│   ├── warm_up_AI_analysis.md
+│   ├── data/                      # ROI, initialization and active/quiesce metrics
+│   ├── figures/                   # 23 figure sets
+│   └── interactive_tradeoffs.html
+└── warm_up_comparison/
+    ├── warm_up_vs_non_warm_up_AI_analysis.md
+    ├── data/                      # Matched metrics, hardware and independent checks
+    ├── reference/data/            # Re-extracted cold data; originals preserved
+    ├── figures/                   # 15 comparison figure sets
+    └── interactive_comparison.html
 ```
 
 Download the [interactive chart](non_warm_up/interactive_tradeoffs.html) and open it in a browser for hoverable metrics and workload selection. Plotly is bundled for offline use. The report embeds PNGs; SVG/PDF versions are provided for presentations and documents.
@@ -108,3 +116,31 @@ Full regeneration requires raw source artifacts, matching policies/tool revision
 Commit this directory together with `configs/`, `scripts/`, dependency file and submodule references. Keep raw outputs, checkpoints, downloaded resources and binaries outside normal Git history; share them separately if needed for reproduction. Paths in `input_sha256.json` identify original raw inputs and need not exist in a fresh clone.
 
 The study has one observation per case. Power/area depend on approximate analytical mappings and need calibration, particularly cache/NoC costs. Temperature is equilibrium under sustained average power and assumed geometry/cooling, with fixed leakage and no thermal feedback. The report separates observed behavior, model-dependent estimates and hypotheses requiring further evidence.
+
+## Warm-up and matched comparison
+
+The [warm-up policy](../configs/experiment-warmup.json) uses separate `warmup-v1` raw-output/checkpoint roots and preserves the same hardware, workloads and full ROI. Detailed PARSEC initialization is excluded from measurement and recorded in `warmup.json`/`warmup_stats.json`. The final ROI statistics still feed the same physical-model JSON files and converters. See the [execution instructions](../scripts/README.md#warm-up-policy).
+
+The [new analysis entry point](../scripts/analyze_warm_up.py) validates and extracts both completed scenarios, verifies matched hardware/geometry and generates the warm report and comparison:
+
+```bash
+.venv-analysis/bin/python scripts/analyze_warm_up.py
+```
+
+It writes only `warm_up/` and `warm_up_comparison/`. `--extract-only` omits plotting; `--reuse-extracted` validates source hashes and extractor identity before reusing tables. Raw results, model policies and matching recorded binaries are required. No simulator is run.
+
+Warm tables extend the original schema with excluded initialization duration/activity, mean recorded active fraction, active-cycle throughput and quiesce diagnostics. Missing quiesce/event counters are treated as zero only where the pinned gem5 source explicitly suppresses zero values via `.prereq(stat)`. Active/idle/quiesce counters are diagnostic accounting measures, not a strict partition to sum to 100%.
+
+| Comparison table | Contents |
+| --- | --- |
+| [matched_cases.csv](warm_up_comparison/data/matched_cases.csv) | All 20 cold/warm pairs, absolute metrics, paired ratios/deltas |
+| [matched_sweeps.csv](warm_up_comparison/data/matched_sweeps.csv) | 24 paired sweep rows, using each scenario's own baseline |
+| [component_changes.csv](warm_up_comparison/data/component_changes.csv) | Signed dynamic/static/component watt changes |
+| [configuration_choices.csv](warm_up_comparison/data/configuration_choices.csv) | Lowest observed time, energy and EDP per workload/scenario |
+| [hardware_checks.csv](warm_up_comparison/data/hardware_checks.csv) | Equality of resolved cores/caches/memory and thermal inputs |
+| [independent_checks.json](warm_up_comparison/data/independent_checks.json) | Raw tick/power arithmetic, scenario-specific baselines and published-reference reproduction |
+| [validation.json](warm_up_comparison/data/validation.json) | Policy/model/tool and analysis-source identities; 560 hashed source artifacts across both extractions |
+
+The comparison's figures cover paired ROI times and cost changes (01–02), core/width scaling (03–04), power/temperature (05–06), normalized energy/EDP (07), activity changes (08), component watts (09), dynamic power versus time/energy (10), initialization coverage (11), paired thermal maps (12), blackscholes active-cycle evidence (13), time-ratio accounting (14) and changes in normalized scaling (15). Open the [interactive comparison](warm_up_comparison/interactive_comparison.html) offline in a browser.
+
+Pre-ROI conditioning does not establish convergence, isolate cache effects or provide replication-based confidence. The report distinguishes changed executed work, activity/quiescence and possible scheduling/history effects; all physical-model limitations persist. No warm-up results overwrite the frozen cold publication.

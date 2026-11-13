@@ -1,0 +1,1302 @@
+[
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/roi.json",
+    "sha256": "dc49f113472bc8ec1cf108112b19299602c413f17503b19ffd043c183d0d5338"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/run_manifest.json",
+    "sha256": "db1fcda3f7704e80fe8340865236aad40a8ba50448ac225df4065ec8a56847ca"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/config.json",
+    "sha256": "94748f5efc4d2487ee52521b04ea67739179ef00cfd649d7a8aebba4e40b0c52"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/stats.txt",
+    "sha256": "007792eba57c49abed613b33de4b05c0632e3c9e33787d2695385f060a1ab8e2"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/roi_stats.json",
+    "sha256": "9eeeba56de1a1c1ccae591d280513679e05209b6f0f63de4e4146034b6acfeff"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/mcpat/input.xml",
+    "sha256": "4da490da7cc599a5e6b134644cdcd0231537af0a2d51ac4d552e835b43c9a513"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/mcpat/mapping.json",
+    "sha256": "d8fb14357c20374440ec181724db0ffa73b5db31a151b4e74ac29fd3f9ebcb97"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/mcpat/power.json",
+    "sha256": "a1ba950fb776e6d674e411a0bb4a86fa9768ee5e77cc89d3e72425a10daf706b"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/mcpat/mcpat.txt",
+    "sha256": "63869ac08b5aea7f5a1afd6f74bb1f0efb73a0f7d2320dbf949ec7e03b066c95"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/hotspot/mapping.json",
+    "sha256": "1e51c8fbcd31bb6d26258e7cac41e2e87a3daadeeb675441ff1740736ca08ce6"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/hotspot/temperature.json",
+    "sha256": "958d8fbdc3badd12d8028a882273d3a62a7304982a8cc4bba69b9835ce008c84"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/hotspot/steady.temp",
+    "sha256": "b2378cd6cd34170a235dada99b5c8123ab9341853298f2b023fe2c3fd6df51d3"
+  },
+  {
+    "case": "blackscholes-c1-w4",
+    "file": "results/v1/blackscholes-c1-w4/hotspot/floorplan.flp",
+    "sha256": "f5e8f812814b660025bfa660d01db30e93a75c587da4df3f5d62ccc9d4af3aa9"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/roi.json",
+    "sha256": "06b31077af8da930bc744a7afe44d26da14a598efa26ddcc5c4937868421dd34"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/run_manifest.json",
+    "sha256": "97705f106ff3a83579af5c95b66362aa421001e83bfdbd00d3e08f8e0e361950"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/config.json",
+    "sha256": "136542152c737f99886a9e6da5982ace91db6ee78c15b52204f9969e0988778b"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/stats.txt",
+    "sha256": "827c6c27e8b24612d1ee1164af7fa36ff14ab0a150c0074a75995d829acbf931"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/roi_stats.json",
+    "sha256": "05a0ca2c293c015df95ebf83088696a1f7054b2c73615e8d643430e5bf5d9b5c"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/mcpat/input.xml",
+    "sha256": "6e23a8e3dd64d65b55ef71761298902b740d4c9a1b27a1c397d6dee70916e76d"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/mcpat/mapping.json",
+    "sha256": "2ab38bed94592b83aaa6856390a128bc8fd229a6d020940c4cc77a5a21b22cbd"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/mcpat/power.json",
+    "sha256": "d9a8872341aef5b7abb06bc6069fda022028cde198edd3665f0706e6ad911ace"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/mcpat/mcpat.txt",
+    "sha256": "f2c6940ac66bcbe723c3a7e5cea66a6be9af8f00c74c6c053faf46ba3ac961c8"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/hotspot/mapping.json",
+    "sha256": "3b5c52541a7e57b6329e8914dfade46c2a292c5fec8a36d6ebc2c2a347a181c7"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/hotspot/temperature.json",
+    "sha256": "8cb7da305bdb1413e40404b18213a0b4f5d1d11d6afe9d29b25b1bbfdd02eeff"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/hotspot/steady.temp",
+    "sha256": "f1fda8828214f13cf7b3b1e462d96df8efbc701a5e539dd721be0828fdf7246a"
+  },
+  {
+    "case": "canneal-c1-w4",
+    "file": "results/v1/canneal-c1-w4/hotspot/floorplan.flp",
+    "sha256": "f5e8f812814b660025bfa660d01db30e93a75c587da4df3f5d62ccc9d4af3aa9"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/roi.json",
+    "sha256": "49f58771c874ed7c76fce94307f7f8a960f6a9bce2d2a6d777dc389b2b7dfeb5"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/run_manifest.json",
+    "sha256": "8cf26212fcfef77ac5ac748eec67e20788ca6282984bace36a9912038f7e637e"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/config.json",
+    "sha256": "d236771c6287d9d22d6c314599119581ca853faf290763d7fb974e70d8f02202"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/stats.txt",
+    "sha256": "e6ab85707639f48eb830fb3368c86e293f9917b11938cfe0ffceda8b9d0d72af"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/roi_stats.json",
+    "sha256": "117ee1cb6ab8a490fef61f286412e70949fadb96c6cf1e2d38751749ff1c2551"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/mcpat/input.xml",
+    "sha256": "8016cc66a23119de221a4a07fe66e73368112cd3575e23b4c0de113d0f7bb30e"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/mcpat/mapping.json",
+    "sha256": "15af7eecfae6b9301bebba46ebb997c2a3821cb646fb1f541d0c853785912aa8"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/mcpat/power.json",
+    "sha256": "964a3e45db555c1d956f75d213fd0749fac9ba1d848f765683dce77b6d282f52"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/mcpat/mcpat.txt",
+    "sha256": "e3817e7c744404aae7e8320b51e7598d7c7bf7f0d69b9c54bd6b945c8a13b85b"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/hotspot/mapping.json",
+    "sha256": "4d46bc22ba3682e67270217077b96ac7a1daf83964b9280799811204f3315233"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/hotspot/temperature.json",
+    "sha256": "6db143ea5a1611d8be785fa2d16a7426bf85ee1f6de8d04fd5d0855bac65966e"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/hotspot/steady.temp",
+    "sha256": "d94f9054b40ce7c82c6972ab889b16a66dd4da736cc3fe4f0dc6e4c3fc65612b"
+  },
+  {
+    "case": "freqmine-c1-w4",
+    "file": "results/v1/freqmine-c1-w4/hotspot/floorplan.flp",
+    "sha256": "f5e8f812814b660025bfa660d01db30e93a75c587da4df3f5d62ccc9d4af3aa9"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/roi.json",
+    "sha256": "56ba562451b154ab6a294e68993251ed2ea7cfc7234130ca2c84b6be6b1f9658"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/run_manifest.json",
+    "sha256": "26b0e1109c5bb7eaf64f246e11cedb3f660ff8030656a377446dd9dc637008cc"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/config.json",
+    "sha256": "f204efa573f1f589229802c579c8528896904c35b67306685c8a24b59ca812e1"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/stats.txt",
+    "sha256": "bea7bd27ac42a8ad3f5b97418fa2c6c1741ef6f81c938da09c977fc867c6e927"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/roi_stats.json",
+    "sha256": "7d8d685e6c961f63adf43d5023e7b9f803af06f10fbcbcf91a86e714d9d933ea"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/mcpat/input.xml",
+    "sha256": "f2967b8609718592a428ec69bf7dc3511d055b841e1eac004e8b7504940acff9"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/mcpat/mapping.json",
+    "sha256": "6d299779e12a880a0fac7f76eeb34d00818460514b73d030a8a9de4688e762cd"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/mcpat/power.json",
+    "sha256": "ee3a2ffd2f183e7df0d61afe93b19afcec9a9046a43ddce918b95b466da10b6f"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/mcpat/mcpat.txt",
+    "sha256": "3265853a9822e5f12bdc874256ff83aa4d3b16a6c1da9a33e6b6debd2c3e891d"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/hotspot/mapping.json",
+    "sha256": "99786f0b768c68914987a91990c605892dd24f7f7e009eb2f3a2b296a393485d"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/hotspot/temperature.json",
+    "sha256": "d5deee9f227a4853bd25e4848f426713f1d9c1d2cef021d7240d5e912e17d1c7"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/hotspot/steady.temp",
+    "sha256": "a073eee04d3ceba3d0a967d873ed771e9b7dbf6f9c305490f78bb819f86100ab"
+  },
+  {
+    "case": "streamcluster-c1-w4",
+    "file": "results/v1/streamcluster-c1-w4/hotspot/floorplan.flp",
+    "sha256": "f5e8f812814b660025bfa660d01db30e93a75c587da4df3f5d62ccc9d4af3aa9"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/roi.json",
+    "sha256": "d661f4f15e5ce8b69a3c088d487d567e765bb9f480ba43b25aa44d2ded30747a"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/run_manifest.json",
+    "sha256": "abc58aaccc40f95dc5c979e9a167232f13d63e937f134ff01f3c2b16f76af409"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/config.json",
+    "sha256": "660f03911aa4d7c7da3af4da8b03f1be2eb82d917d4ae94a62878ad30eeadd93"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/stats.txt",
+    "sha256": "3c20b094393f5f390fba9ac47cfd933dc7e5b531e5930476ab7d2d00d1874b01"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/roi_stats.json",
+    "sha256": "18bfc6057e6cf92708e699c92f7598b91afb303f0129560d10605fe46770fd3f"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/mcpat/input.xml",
+    "sha256": "d5221f9481696c1109e7bec2f72788c9a74baf2e8b4ea4b27c2dbf384cadb125"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/mcpat/mapping.json",
+    "sha256": "1c9c6b8b0f9a36afb8e8a7828ba69882a224ff408e44baf476c812f03950c58c"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/mcpat/power.json",
+    "sha256": "ce8244308e094f4b840ad2ca48a21af05e038b2dcb5f56c088eecdbce17c5d3f"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/mcpat/mcpat.txt",
+    "sha256": "ce848e8cc9f4cbc3b05ecf62d832a96ced889d6f18660ab378c1e95775e685de"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/hotspot/mapping.json",
+    "sha256": "d8d2b3a400dcec5f273df2e99c553eed318992b819cb0f323d0f2a70afbd41e2"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/hotspot/temperature.json",
+    "sha256": "10b7a8f25ab49be8a7b70cf3eb0d11f3b6bb7c4a8b0fe4f4cc8515b87d92fd8f"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/hotspot/steady.temp",
+    "sha256": "97e1167ddee1d585ba5e8cf882d24bcff28fcd7b328a78d06e70b2e0d24b99be"
+  },
+  {
+    "case": "blackscholes-c4-w4",
+    "file": "results/v1/blackscholes-c4-w4/hotspot/floorplan.flp",
+    "sha256": "4304f1148dc3a59159763aaa3af638b5657431b0637733ab11ee7d495dad185d"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/roi.json",
+    "sha256": "bdba8d0bcf2dad83d0f129c2dd41dd4b469225e20008b66ff4125d0b01d97666"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/run_manifest.json",
+    "sha256": "d96b46848808576c277a23f13c5ff923ca4c5d6317af4c49f090a63a87b1fc09"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/config.json",
+    "sha256": "92db1c9e81c9439c702eed4e7fc3d31b8b6fc2c05777035c1dc001ec29164d62"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/stats.txt",
+    "sha256": "ce9bd1ac5d76e5d27d6191f128683f09df6a6862ee4997afe288656e7f02443a"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/roi_stats.json",
+    "sha256": "052e6dbc1a8c3f9953e7e17a6ec90499f94529fd1f37188e03a4ce9ed844a1ad"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/mcpat/input.xml",
+    "sha256": "f51ccd3e016f9a1dfce74ce788ae59da986213602847722378781d5c424a30c2"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/mcpat/mapping.json",
+    "sha256": "114d304633abd4d2d25d1b20f68d942b2db01aa7479e2ec471cf5e5d5000dae0"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/mcpat/power.json",
+    "sha256": "12d867445ce4931122d052aadde5219616f221ea4b0dfe40ab7fae502f6df825"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/mcpat/mcpat.txt",
+    "sha256": "d40d19361d1b4dbfe45ebda5da0cfd45ac54799d1e1962a3f22149a7930b9574"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/hotspot/mapping.json",
+    "sha256": "4c789b19cba3248db4281543304225c8f0087d39e0b99426487216d971dd7c2e"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/hotspot/temperature.json",
+    "sha256": "fcc8a89d7f14c21d3a99fef4cbac3fcc5dd2b157b7dd1a81d7ade05e7221bd4d"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/hotspot/steady.temp",
+    "sha256": "f18d2621a7932f3f0a5651e39839dace44cc3f12a0bb10d4fbcb0669a7467a59"
+  },
+  {
+    "case": "canneal-c4-w4",
+    "file": "results/v1/canneal-c4-w4/hotspot/floorplan.flp",
+    "sha256": "4304f1148dc3a59159763aaa3af638b5657431b0637733ab11ee7d495dad185d"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/roi.json",
+    "sha256": "be43ba193eb1a724084df141566043a61d0749fd6fff83b35366daf90b3423fa"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/run_manifest.json",
+    "sha256": "f6afc1c5f685adda9bb12a4766581950f300b5ceb8aa9066d1c00af3aa09b185"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/config.json",
+    "sha256": "c6e109b41543967d408dfe21d08de8410c179bc1e9671de64c581f8058722015"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/stats.txt",
+    "sha256": "04fadf4fad4bbb9926ac0274f4618f8d6c092dc25ae7470b8d0650f62dd81ea0"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/roi_stats.json",
+    "sha256": "f3f6a4b3f19cc539fce9ffdb4ae78483f2b033119d492c4bd81a42baac234f5f"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/mcpat/input.xml",
+    "sha256": "86b2cce82d898a638339e6301b4923be74bf8ff788070b79b359a40341b82472"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/mcpat/mapping.json",
+    "sha256": "f5bf89f46a774ab7c75ab42e5b4db02acd88f9a7ff592a5b5b755a1d52553291"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/mcpat/power.json",
+    "sha256": "4e7e2c298c5eb1dff0b5e59214748479968366db8f092b08726a8a7c32984d04"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/mcpat/mcpat.txt",
+    "sha256": "6f866c289f0356dc83b20e026119cfd1a20e102cf32ba125d22db221efc4234e"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/hotspot/mapping.json",
+    "sha256": "2d55971fb2ea584fb229816f90c342d284dac325eab37b197f4c15f6581aa27f"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/hotspot/temperature.json",
+    "sha256": "dd557b0b5deb72c08a263a5cc9e7aced0b2273a78f708d984b5991b269139976"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/hotspot/steady.temp",
+    "sha256": "9bb90877176a47dfaebfa9683fa752703ccf35bd2ec9296e374f52b1f45f2c6b"
+  },
+  {
+    "case": "freqmine-c4-w4",
+    "file": "results/v1/freqmine-c4-w4/hotspot/floorplan.flp",
+    "sha256": "4304f1148dc3a59159763aaa3af638b5657431b0637733ab11ee7d495dad185d"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/roi.json",
+    "sha256": "01bfd9b7486b6b48a35693b8c5c1c56db8a28ffab09d1541a8461d0520684676"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/run_manifest.json",
+    "sha256": "4f75478e3324515a57dac880e9f84f9801c74833c6658493bbb1676523560d63"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/config.json",
+    "sha256": "96514065514145ab8fa4c793df207c14626ac9638b1273163a3ee9b54fbb6d06"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/stats.txt",
+    "sha256": "69445c231f40fcad437614e263e6af7e4b1e2feeeb589ba222cdfdb20099e0f4"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/roi_stats.json",
+    "sha256": "43d1407c04537e4eafe31d7893e597d48026c51576f3d5dbc2aa8be49af3d640"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/mcpat/input.xml",
+    "sha256": "6b60b6bc1035536953457fd63be3b1c0ca9440542f9eea1da4bf8fd481ffc3bd"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/mcpat/mapping.json",
+    "sha256": "e7e44c4b1d64488297e250700adbeee9f5cb8f5b284bb1aab5ee268f5780a6c7"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/mcpat/power.json",
+    "sha256": "597abd209d1a117652de77038f048d6789187bfd973f28271bc4a318a509a7a7"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/mcpat/mcpat.txt",
+    "sha256": "c23c57981a7eac416c9daeb950ae591e6c3d3d6ab01cd8f0897698d7090ea205"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/hotspot/mapping.json",
+    "sha256": "40c09819122ae141d8e191f57c3f53b134a99f6fbf62e031162bc8bfd0e3d223"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/hotspot/temperature.json",
+    "sha256": "4993ad4c7537ad4dcec6ad0ad95eb267249f2db1479fb1f6ba815efb53cd666a"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/hotspot/steady.temp",
+    "sha256": "81b781f97f15dc8c792e4b400915e861a5fb3fc77ef1ee5dc7e60fd6f00d4e3a"
+  },
+  {
+    "case": "streamcluster-c4-w4",
+    "file": "results/v1/streamcluster-c4-w4/hotspot/floorplan.flp",
+    "sha256": "4304f1148dc3a59159763aaa3af638b5657431b0637733ab11ee7d495dad185d"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/roi.json",
+    "sha256": "d2c4e9dbc8e332cb4c6be9a8b626536c303242e181840d12e1ec893d0dff69f7"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/run_manifest.json",
+    "sha256": "04d7219206b32553b40692e264d54a0939dd1c1663f1109220bfae23f6ea5f0f"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/config.json",
+    "sha256": "9f83467226e051ea6b864775c1dc9696b06e1e84ba4425dcf8fc705eecdaa6b1"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/stats.txt",
+    "sha256": "4d54a4c31cdc9b7c88b10368ca8c6d5b57006a125a60ff3f23711d9e92d841fc"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/roi_stats.json",
+    "sha256": "6ba4fd704d9a5ef60d2ad75ed78246980b00d6937359b1dc852480e4bf318fe9"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/mcpat/input.xml",
+    "sha256": "befedccbb6eafde61583f5b47a2ab604d7a41f1cf1069b4cb258ee01736bfeb8"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/mcpat/mapping.json",
+    "sha256": "d21b436d4b4cb884d50d0670614749738b05a72e7678a02c0d824f550c45c57b"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/mcpat/power.json",
+    "sha256": "54ee6bd6f8dde3e0a91f43d2a7a509de2ec59b5027cb00c8a22cffe517be1ec7"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/mcpat/mcpat.txt",
+    "sha256": "12532e5f44fa767d3cdea1312ca9954d694f06e50623b3ada0954496d383b871"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/hotspot/mapping.json",
+    "sha256": "a7865ffd47d9ed1da0fbd140f90f157e8b16242a2070f36b8515944833e6a50c"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/hotspot/temperature.json",
+    "sha256": "099ae331f78737a6bb716a5ba8c510fbc35963f89afb5ef9e4b9b6a1d0c2e072"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/hotspot/steady.temp",
+    "sha256": "6b3d636c32a0805d5b13514bc2cbffe55b4e3d5422a20457746e470d5e1599b6"
+  },
+  {
+    "case": "blackscholes-c8-w4",
+    "file": "results/v1/blackscholes-c8-w4/hotspot/floorplan.flp",
+    "sha256": "b78d9b4b966e3eb710c12dc120f20dbce2209e999868ccd0d3747d0a65ffae40"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/roi.json",
+    "sha256": "d79d1587989163c8d9b304e870cb2ba5e8ecfd983c08e3ebbcc4a0bdccb118f1"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/run_manifest.json",
+    "sha256": "abbed037f0fe2aebe06c94dbb6e829fb4d7468caa5305243c4179a3d561d03bd"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/config.json",
+    "sha256": "43d5cf51b8058e21b0db8532e91904fe30c025980e344a479d5c352d77d6eb7e"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/stats.txt",
+    "sha256": "395f75cb1af540f83e48bab0735836ec23590f6c1441dbfff5a93f1e61b9a14b"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/roi_stats.json",
+    "sha256": "f7df41b4eecb0156f3a7386891630dbbefd897047489d0d40820bb9915ca57e6"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/mcpat/input.xml",
+    "sha256": "fd597c18b9110151fb2d0947e6d426e8df574a8c58e7dd9a9b693d4b56a96a35"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/mcpat/mapping.json",
+    "sha256": "0e25beaf0ed1e6449be7429261dbdc26a65579245a7a0791dfdd8075a1d931a1"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/mcpat/power.json",
+    "sha256": "d4199f9f5f30733bb004d7a9b5f6bb44dff03d117b4a9dee211773a0c151f479"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/mcpat/mcpat.txt",
+    "sha256": "aa2ab92e161f473fec763cade1e2a92d20536601a754955fa27639f8d7a1938b"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/hotspot/mapping.json",
+    "sha256": "95bfb85f58a0a4d83e1fc98d1b5f3999f462307311b7909e34042efc1d0ac76e"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/hotspot/temperature.json",
+    "sha256": "f3e450e0375bd1b3b82d2bf32e05f629868c1d7a94f07938ad0313f4e14496a3"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/hotspot/steady.temp",
+    "sha256": "74448b483a66f4d4cfe8973fb3242a09e06fabbc4ed740491c0046d7b8830d03"
+  },
+  {
+    "case": "canneal-c8-w4",
+    "file": "results/v1/canneal-c8-w4/hotspot/floorplan.flp",
+    "sha256": "b78d9b4b966e3eb710c12dc120f20dbce2209e999868ccd0d3747d0a65ffae40"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/roi.json",
+    "sha256": "37979e51ccbbeb0f3431ae62a2ba724feeaff24a36de7d62560abe34edc3aa08"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/run_manifest.json",
+    "sha256": "4ea9998a088a948ad4f6be526e727cc9672a0a788bea10048c37d61344d75ff6"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/config.json",
+    "sha256": "86f2d31008d1613418fe4dfe4dc0b0bc03e65e2aeec69bb20755e76d8f077236"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/stats.txt",
+    "sha256": "77f7276ac46f8e9df344a0016e84b48274dd0183c9ce178edae8ef48469add6b"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/roi_stats.json",
+    "sha256": "ead85a11c6a7d190edc30af9cc580df779e60fa77b616dd119f8032b8285eda6"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/mcpat/input.xml",
+    "sha256": "3dcb25a874a037e8b5d2ddd51c643b8969e340498450e8f1a36b6211bf8d6efc"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/mcpat/mapping.json",
+    "sha256": "f96bf017983a5d59d81e886d1578564544daac653972b88a6c997aa503fe0643"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/mcpat/power.json",
+    "sha256": "cc889b63921d6e8467f7a6b376e9f5884927584c01c249c8869d6d725893df15"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/mcpat/mcpat.txt",
+    "sha256": "824e2d3381f655256b618c723b647859ff656f7e1c6fcf885e02786932898349"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/hotspot/mapping.json",
+    "sha256": "344813f967f5afaf49ac7904daa682f363e82a42ebb0c6d53542107a9ea36559"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/hotspot/temperature.json",
+    "sha256": "b0f8fd472a00673fc425311ba65021bbb31fbf33792ea934e45a356232de1a54"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/hotspot/steady.temp",
+    "sha256": "e0d22c247ffc00c5bb0d54e9ec3fddfeb16c76ff7916e291fab6acc5998015d4"
+  },
+  {
+    "case": "freqmine-c8-w4",
+    "file": "results/v1/freqmine-c8-w4/hotspot/floorplan.flp",
+    "sha256": "b78d9b4b966e3eb710c12dc120f20dbce2209e999868ccd0d3747d0a65ffae40"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/roi.json",
+    "sha256": "b5904e5973398678313534e580452f1eeb3365e22d4feffe83ce530ea8006b39"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/run_manifest.json",
+    "sha256": "851068d4137b22a363e03d8a1014b7354dcf717e690499c270402a6506928610"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/config.json",
+    "sha256": "28248803c22143d83bc5bbac4434f2c5a665c318512ac8997f1216336e26799f"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/stats.txt",
+    "sha256": "fdc4b0a4b4c6a32d5defd51719b022a01068d43869e999979096735fc1dfad3a"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/roi_stats.json",
+    "sha256": "2ed1c120bfbb6a17720acf7320b95d0cde25655deb1bd3e83b494d4ec460c065"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/mcpat/input.xml",
+    "sha256": "a1df4e974256a3cecbf04573fd0acd306ad2aa177140ef3633c386c7ee9694ca"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/mcpat/mapping.json",
+    "sha256": "f296020289cd43906890466ea6cd5dfc6fe842b3c396ce240eaae67c7dae7200"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/mcpat/power.json",
+    "sha256": "b3671612880fada135032627f1efe67cb6cfa7b31ed28a4a87d6312544fb0f4e"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/mcpat/mcpat.txt",
+    "sha256": "cfab980deb133c963d6dbec7587962dbb26697185185a6b8917f116d6f24f6f1"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/hotspot/mapping.json",
+    "sha256": "036f9bd437b3a227efecb9324f6f3e581b069c426b9b735938da8b78846c13ad"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/hotspot/temperature.json",
+    "sha256": "fb3e5ae68b1430228e63ec1e492611a9f997d2d5ff4b0dffda10a6066a5c1569"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/hotspot/steady.temp",
+    "sha256": "ae88a88643efce4fe70fe969bd96237e6e8693df6f0f59b258b2c16d0c37486b"
+  },
+  {
+    "case": "streamcluster-c8-w4",
+    "file": "results/v1/streamcluster-c8-w4/hotspot/floorplan.flp",
+    "sha256": "b78d9b4b966e3eb710c12dc120f20dbce2209e999868ccd0d3747d0a65ffae40"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/roi.json",
+    "sha256": "4ca439fce8c1d515bdbf2afd52b3a06a44f670eb35a8316e867bb639187e5dbe"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/run_manifest.json",
+    "sha256": "7f55cabdde6dfefab10898d95375fe56252b0607714394c574d5ee0c48ca7c6a"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/config.json",
+    "sha256": "1b9f64e02282610dbb46a172c7d2176e4830fe51a9b3e076ea977aa86d796ae8"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/stats.txt",
+    "sha256": "60156bbb5b32706f63967d2b2c7454c94dc343423c5f91713756d49045178323"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/roi_stats.json",
+    "sha256": "2136381a465eee9d142940cf73fc10754eec3e3d5b01976cf4b6b0c0d79100ad"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/mcpat/input.xml",
+    "sha256": "25029aad5a91f978e55e071d14f124180f42e3d03992ee78734ef5475cae821e"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/mcpat/mapping.json",
+    "sha256": "6e0b6f11109b63b11f64c1b2a6f8c4a1541d9020dfc299cb9451f34ecb391d68"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/mcpat/power.json",
+    "sha256": "ec755a4f5a39d7774cdd7cd0d5c22b4b6f1df65a87ce55e5eaabb01bc5bd26f9"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/mcpat/mcpat.txt",
+    "sha256": "992b5983f6afa3ca2302735397755bbb5e32e9d9cfd9e97d13757e0d14a83209"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/hotspot/mapping.json",
+    "sha256": "2ed50410991f353bae46a3fdde6fc20865ece930d3968b1c60ffcec391fb2647"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/hotspot/temperature.json",
+    "sha256": "8d31096cb6acf297a17265c13e92f6a7903877d8c767357aa89929908693a4ff"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/hotspot/steady.temp",
+    "sha256": "c9b350412b5fd997ef36b31d7558bc9c181d1ad18843f9c3fe054af18b52451e"
+  },
+  {
+    "case": "blackscholes-c4-w2",
+    "file": "results/v1/blackscholes-c4-w2/hotspot/floorplan.flp",
+    "sha256": "47f383c54a795deeb9ac94f238bf9dbfa541d44e1135b3d0348bccd558ba24d8"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/roi.json",
+    "sha256": "4553ac95f3de9cad0d1830205e767ef5bf79182427a154843e3eea56d3317404"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/run_manifest.json",
+    "sha256": "0e249ac8000034154789b145ad00ad2717f135fdc0d2612a29bbbadf27dffb6e"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/config.json",
+    "sha256": "60c0d46c3508635192da854ebb82a66abec518409b818d28761a08a43722ea88"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/stats.txt",
+    "sha256": "da179533931cde71e28d376b0320d3004514c23f003154fab30a0eff33d267be"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/roi_stats.json",
+    "sha256": "d73259e2668f8172fd68c0770295f384aaa7259ad9a86b9d8e2ff8f0eeeb47b6"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/mcpat/input.xml",
+    "sha256": "ea89015431ce7420580d94e1ad16cbed273e918c21177ae82f06289144806ca1"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/mcpat/mapping.json",
+    "sha256": "5c181e54f698ff0969305c1905a4da98f41834452d69fe0aa4bb9560ee0c33ca"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/mcpat/power.json",
+    "sha256": "2fbad91e5e96872e837069f7a10ca839d4d98e5ce19cef27a0fdc07558628738"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/mcpat/mcpat.txt",
+    "sha256": "eb8ee01a9436498b7d8f8e476accf8a103b03aeee63bffc82dedf51e5529f281"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/hotspot/mapping.json",
+    "sha256": "3f49eae367c80d19834cc372104d138b5b789f8311bfe03bf099f3f723e6376c"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/hotspot/temperature.json",
+    "sha256": "9e52200306488de06fc429e4e5f29c6d14ea414083a4d99712b26fd3bf0d5ea6"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/hotspot/steady.temp",
+    "sha256": "5058f67b80ffd8f50d1bd9e3949a42ccfc1c1c275c2c842ced4ba4142e998ee7"
+  },
+  {
+    "case": "canneal-c4-w2",
+    "file": "results/v1/canneal-c4-w2/hotspot/floorplan.flp",
+    "sha256": "47f383c54a795deeb9ac94f238bf9dbfa541d44e1135b3d0348bccd558ba24d8"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/roi.json",
+    "sha256": "7a93fa5b73b94e1327518864b0e8e626c0a9f7b03a99c23003c9c0b37c4b25e3"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/run_manifest.json",
+    "sha256": "f88f1307181b4ab379adda9901a321f0fac0b0c719163ef7032953e57fea8755"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/config.json",
+    "sha256": "7e27589cb0ba70a375d8f189c631e747ceeaccd34edcc521871b0eefcefeaeeb"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/stats.txt",
+    "sha256": "be91806e1708cb2df3af4206d07c7eabc15f7c3cce190b905e57a11d32bc3e8f"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/roi_stats.json",
+    "sha256": "bbf370a2121edce3f340c6a4afa57e919fb48d425edbeb3480d1b76db61991a0"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/mcpat/input.xml",
+    "sha256": "81451a0b16a4fda708bbeae38ad3e026b9b3a3b25ce7a5906a19cdd756564863"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/mcpat/mapping.json",
+    "sha256": "2e7c0b478131e4bfb308eb5cae920bd7ddac18ef3242567db7c01151f980f6b9"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/mcpat/power.json",
+    "sha256": "8c8eb58d7246a7d6f701a5afb17916b97885e00e0a56ea12ea2636149382318d"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/mcpat/mcpat.txt",
+    "sha256": "1d07ddd30cd9b06717c4bb60421a13615d7e5a51120d9dcbb62f97e0b87abbf5"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/hotspot/mapping.json",
+    "sha256": "2e90a26e9d10b6a6c58ea50f379f312cd695851b7f99ed6af8895fd419a3c570"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/hotspot/temperature.json",
+    "sha256": "d1570f963a1fec4928b691ad96e365e1055645c5bde8bb4304f6a0ad6976b03e"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/hotspot/steady.temp",
+    "sha256": "7b8cce4d678ae280c26e2c3ecbec22337263fdbe780377ae5427eda3b0fa19d9"
+  },
+  {
+    "case": "freqmine-c4-w2",
+    "file": "results/v1/freqmine-c4-w2/hotspot/floorplan.flp",
+    "sha256": "47f383c54a795deeb9ac94f238bf9dbfa541d44e1135b3d0348bccd558ba24d8"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/roi.json",
+    "sha256": "aa48a4fa152f89efadf6c7dde414811e84339bc6a8b354d823e62181295a3a40"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/run_manifest.json",
+    "sha256": "baea4c779882396ef8e3620818f2526c16c6d8bc5d19a3e17ff4c3c5fdbf35ab"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/config.json",
+    "sha256": "a7fef0fe53207f44fff65256db25d696dd530feebb2684af11fec9c93881506a"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/stats.txt",
+    "sha256": "e00c5c0d686b8c51bf1e95397211ddb8730b1fe5e2e8f77c0afca767872a4b6d"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/roi_stats.json",
+    "sha256": "0cb46b5e88dbfdcdbbe1a48ee930c5c6ecbe098dfa46f4b129097c5b34267a75"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/mcpat/input.xml",
+    "sha256": "b17bd9aaae81ec0acde23e0eecb17217b3c5d0b89e4028751619129599494438"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/mcpat/mapping.json",
+    "sha256": "adf2d0ebfe835172418c24b9aca6188ac55f0b848a6b46b85c76d825219e0ba0"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/mcpat/power.json",
+    "sha256": "094a21c19d7c0e0d02a16f96ea00dc884d3fc6b0b920484e86dbd08331c720bb"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/mcpat/mcpat.txt",
+    "sha256": "1f9b0712a7da9a7028d9159a51469ad8252d00ccbec5128f41de848b3b5a755a"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/hotspot/mapping.json",
+    "sha256": "72209082209991236aba13bea496a6fba99344d7b0ed91886e155b35f07724ec"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/hotspot/temperature.json",
+    "sha256": "23d24e306843984e441d6e52354060eda0910851af7855dd926dae9360830350"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/hotspot/steady.temp",
+    "sha256": "3dec8496efad8ff202bfe74d937a1a5640a040c1eb7b8f17452ce9c0ae215ae4"
+  },
+  {
+    "case": "streamcluster-c4-w2",
+    "file": "results/v1/streamcluster-c4-w2/hotspot/floorplan.flp",
+    "sha256": "47f383c54a795deeb9ac94f238bf9dbfa541d44e1135b3d0348bccd558ba24d8"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/roi.json",
+    "sha256": "1c6e834d9168486f31a864d30e46c7274969f7fa9be880612bc6c6120664a426"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/run_manifest.json",
+    "sha256": "a08497bb14d3dce1dc39c55d0138c5da75e1ae04856658531e4d9d10b1c92e5c"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/config.json",
+    "sha256": "ea8bf8344ddc3b3104cdf04da7def0daa2cbf96e8d0b15debadacd655b6737fa"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/stats.txt",
+    "sha256": "9497969ad1f024813e55f77c1c32b49161b179c9b0995b4a7f8a15de3606c2d4"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/roi_stats.json",
+    "sha256": "d6124110c8a2844c17d21939c9dca7ff33450f16dc991f55fa39cfb8b2a5643e"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/mcpat/input.xml",
+    "sha256": "7476e0c4a80428db5a3849c933226757c17c4426ce72a3e56a4578a1e041c1a7"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/mcpat/mapping.json",
+    "sha256": "219057c0a03c3e9c887afaaebeb4351ba8295e1be941b559ddc0a611ea408a80"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/mcpat/power.json",
+    "sha256": "45142a1dac187431637fbe53bc42e971aaf6aa9be7e9086d11bb7baae9ca9d2f"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/mcpat/mcpat.txt",
+    "sha256": "fa50e2d67522123548a15119bf3d3464697013221ea80ba12b51413f43a1ad9d"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/hotspot/mapping.json",
+    "sha256": "bb36661d82e49134b82866d5503498eeda79b138de24ed678e4db9c04e1cb551"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/hotspot/temperature.json",
+    "sha256": "0431e2c55e7511b71a1faf088f1bac219f0a213445e1a02b2b7685929435b7d0"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/hotspot/steady.temp",
+    "sha256": "a67d5982e629b4f381598a04df5346de80fba032c9e85d81831a8d1385d79521"
+  },
+  {
+    "case": "blackscholes-c4-w8",
+    "file": "results/v1/blackscholes-c4-w8/hotspot/floorplan.flp",
+    "sha256": "3cfea911ae471396de38633a499befa2e0e1359614a9ea126ed6e6c24972b40d"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/roi.json",
+    "sha256": "74f7b159ee639b2e2bd1ffccc17dc1f536b17b1ca9b89ed578455e8f9e70a720"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/run_manifest.json",
+    "sha256": "61d036139aa774642b01d914a0f8f198f3fb48e4bd6d63a16f9dd0d886eb424b"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/config.json",
+    "sha256": "a04b9699f0e63e4973a9a9edee51dcf27215a192949d43eb8b0d4ced41bcbe40"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/stats.txt",
+    "sha256": "b3123101a0a4a579755ef783c29749b655dd23f046f734c540a4b74ad6211c2c"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/roi_stats.json",
+    "sha256": "288b1e27bc140c5daae9858dd5dcee8dbfe7b0d84abcd61f881ceff51f600966"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/mcpat/input.xml",
+    "sha256": "62343304a41b54facb8c80543555a150e8c282287e5fcca711ed421580437ea4"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/mcpat/mapping.json",
+    "sha256": "d9041ce781625e1b74f7547cb232ee3b6d5fb1321bfc541d6344f7210204d815"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/mcpat/power.json",
+    "sha256": "42063296998627baeb8db9815071391565e58b4bc90d283d4a5806a70a34e6e1"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/mcpat/mcpat.txt",
+    "sha256": "b0ccf02463d3bdf5db8d5e3dffd42d4b832642d47d117b694f741567ed06c547"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/hotspot/mapping.json",
+    "sha256": "d2b1249f59fa47531ed33e019bf82c417d62a6afad9fe42d20661aacb9341499"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/hotspot/temperature.json",
+    "sha256": "7b8421aec3ecfc20c3ac7ba05ff9cdc2abb32fa31de7160244e4899bbc699b83"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/hotspot/steady.temp",
+    "sha256": "ac89a28fb6b1a1532a746e3aa8ca26ce639dec3da50688dcf29cdb3f32f41356"
+  },
+  {
+    "case": "canneal-c4-w8",
+    "file": "results/v1/canneal-c4-w8/hotspot/floorplan.flp",
+    "sha256": "3cfea911ae471396de38633a499befa2e0e1359614a9ea126ed6e6c24972b40d"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/roi.json",
+    "sha256": "c63e8828948a57707f1fb68a8a455505f7ff22ce6f64345f55cad4b94bfb7d7b"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/run_manifest.json",
+    "sha256": "36771a1307dc574ec9b6a6a27bb7310d6e7b4b8504e2dda84d1920baa1a5e092"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/config.json",
+    "sha256": "5c042e2efc34339255bbb92557e7e05d5c7ab920e996396dd0ac4fbc8de37a0a"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/stats.txt",
+    "sha256": "a42a6b8adb62f59ae8e1165c4fd05162dc05e46a0103cf9b167d402cef45be74"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/roi_stats.json",
+    "sha256": "be9c2a0001474114013f882223a3bfa59ea29fc083a43547aeb561b1f378f574"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/mcpat/input.xml",
+    "sha256": "9951714507d418febb5879c938c1457fe014bb411a3cec6342f54cf8145ee2a7"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/mcpat/mapping.json",
+    "sha256": "4e153688af0fbe3eb5a607ce5d0cd44fa662e00a288beb7e879301baf179f716"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/mcpat/power.json",
+    "sha256": "c2e4c2e057d935a58ad3ae5194987c043ced25e59883ea02bbb0f340c5e22f6a"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/mcpat/mcpat.txt",
+    "sha256": "39f2e3ae64a6cfac5ab918d2a423c0ab275a7d82ff10c95b82feed73309f335d"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/hotspot/mapping.json",
+    "sha256": "f4fb6911611ad1f31ea8991f04d2a6bd43b7a67ae33c16eb94759cd0bb82eab4"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/hotspot/temperature.json",
+    "sha256": "8490484e98f32a056691a423cf0b21ce249e8883bcaf2a4175578a145c3fc9bf"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/hotspot/steady.temp",
+    "sha256": "f63b956c66b1483db42d10f097b90230338c8f9f870a0c95b840ce6c08a7ccfc"
+  },
+  {
+    "case": "freqmine-c4-w8",
+    "file": "results/v1/freqmine-c4-w8/hotspot/floorplan.flp",
+    "sha256": "3cfea911ae471396de38633a499befa2e0e1359614a9ea126ed6e6c24972b40d"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/roi.json",
+    "sha256": "e35069879be67c5ee493164920655deeebbdf459e2f476519fc71c943166ae14"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/run_manifest.json",
+    "sha256": "3fc658692f5173caee26122344a2854eecd25e9321edffb098c27edb491f2523"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/config.json",
+    "sha256": "af139b8ac45ada2e4ecc5bd2119b8445ed415f3e16aa89d39d78becba8e21fa6"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/stats.txt",
+    "sha256": "92936694e86523fd66f3404976de5b4b2ea34b66ff387890c29a8b66a5a5656b"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/roi_stats.json",
+    "sha256": "07a16e013dc7d88bab8dc4695ab7a2f8dc21ce4b84cc33ee3471f1d72950810c"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/mcpat/input.xml",
+    "sha256": "50d3c353b2aaa313859fb7e23b93c5b4aa99875e32b8cd7752c7ef5118d5ea82"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/mcpat/mapping.json",
+    "sha256": "03e8fc2b1ee1092b1961d56ee0bee5e06974aca0d05cd2c6df4f5aaec6eda51f"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/mcpat/power.json",
+    "sha256": "e3764b44b8dd273e2d5b5a5afda1f0af6d951c1460ccd01d2c7f536a763d05c9"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/mcpat/mcpat.txt",
+    "sha256": "8c3c7d5f0b075b2e46284d99d162ee8cd820a5099a8e608dd721fc6fb9b8d630"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/hotspot/mapping.json",
+    "sha256": "d752fe39a01e2277b1a57a4014dd135a85d85de9a8e4e5514f4a547577c045dd"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/hotspot/temperature.json",
+    "sha256": "f39ae1b989fde8e81ab186267b09d23798d8309703ad0ba2f193af008bdbbc11"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/hotspot/steady.temp",
+    "sha256": "edf550929419c6159ef38aad54bf6e4581ca5b9559cb1efb37a6dcb0efe4ad3d"
+  },
+  {
+    "case": "streamcluster-c4-w8",
+    "file": "results/v1/streamcluster-c4-w8/hotspot/floorplan.flp",
+    "sha256": "3cfea911ae471396de38633a499befa2e0e1359614a9ea126ed6e6c24972b40d"
+  }
+]

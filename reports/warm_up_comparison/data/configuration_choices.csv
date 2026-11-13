@@ -1,0 +1,9 @@
+benchmark,scenario,fastest,minimum_energy,minimum_edp
+blackscholes,non_warm_up,blackscholes-c8-w4,blackscholes-c4-w8,blackscholes-c4-w8
+blackscholes,warm_up,blackscholes-c8-w4,blackscholes-c4-w4,blackscholes-c8-w4
+canneal,non_warm_up,canneal-c8-w4,canneal-c4-w4,canneal-c8-w4
+canneal,warm_up,canneal-c8-w4,canneal-c4-w4,canneal-c8-w4
+freqmine,non_warm_up,freqmine-c8-w4,freqmine-c1-w4,freqmine-c4-w8
+freqmine,warm_up,freqmine-c8-w4,freqmine-c1-w4,freqmine-c4-w8
+streamcluster,non_warm_up,streamcluster-c4-w4,streamcluster-c1-w4,streamcluster-c4-w4
+streamcluster,warm_up,streamcluster-c4-w8,streamcluster-c1-w4,streamcluster-c4-w8
